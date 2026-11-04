@@ -19,9 +19,15 @@ export async function mongoCatalogData(opts: { includeDrafts?: boolean } = {}): 
     CategoryModel.find(filter).sort({ sortOrder: 1 }).lean(),
     ProductModel.find(filter).sort({ sortOrder: 1 }).lean(),
   ]);
+  const updated: Record<string, string> = {};
+  for (const d of [...categories, ...products]) {
+    const at = (d as { updatedAt?: Date }).updatedAt;
+    if (at) updated[d.slug] = new Date(at).toISOString();
+  }
   return {
     categories: categories.map((c) => strip(c) as Category),
     products: products.map((p) => strip(p) as Product),
+    updated,
   };
 }
 

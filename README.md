@@ -62,6 +62,7 @@ production build on localhost without them, set `LOCAL_PREVIEW=true` (rejected f
 | `pnpm admin:hash` | Generate `ADMIN_PASSWORD_HASH` |
 | `pnpm uploads:cleanup` | Delete artwork uploads never attached to a quote (> 24 h). Run hourly from cron in production |
 | `pnpm images [folder]` | Import generated photos and rebuild the image manifest (see Photos) |
+| `pnpm seo:audit [url]` | Crawl the sitemap of a running site and report SEO errors (titles, canonicals, H1s, share images, JSON-LD, broken links) |
 | `pnpm check:placeholders` | Lists business details still missing; exits 1 if any (use before launch) |
 
 ## Feature flags
@@ -112,6 +113,13 @@ Without any photo, each page shows its brand illustration.
 | Customer artwork from quote forms | `UPLOAD_DIR` on the server only, never public | Private files up to 100 MB, downloaded only by the admin. Include the folder in the nightly off-site backup |
 
 Social share cards are generated at build time from photo 1, so they need no storage.
+
+## SEO
+
+See `docs/SEO-PLAYBOOK.md` for the launch checklist, keyword map and off-site plan. In code: metadata and JSON-LD in
+`src/lib/seo.tsx`, share cards at `/og/...` (`src/app/og`), guides and industry pages in `src/content/{guides,industries}.ts`,
+on-page checks in `src/lib/seo-score.ts` (shown live in the admin editor), IndexNow in `src/lib/indexnow.ts`.
+Env: `GOOGLE_SITE_VERIFICATION`, `BING_SITE_VERIFICATION`, `INDEXNOW_KEY`, `SEO_NOINDEX`.
 
 ## Security notes
 

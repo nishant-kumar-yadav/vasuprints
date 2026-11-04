@@ -7,7 +7,7 @@ export const categoriesData = [
     "heading": "Custom Packaging Boxes for Every Business Need",
     "intro": [
       "Make your products look professional with customized packaging boxes. Choose from different materials, sizes and printing options according to your requirements.",
-      "We print folding cartons on mono carton, SBS and duplex board — from economical everyday packaging to premium retail boxes with foil, spot UV and embossing. Share your product dimensions and quantity, and we'll recommend the right board and box style."
+      "We print folding cartons on mono carton, SBS and duplex board — from economical everyday packaging to premium retail boxes with foil, spot UV and embossing. Share your product dimensions and quantity, and we'll recommend the right board and box style. Not sure which board to choose? Our [SBS vs duplex guide](/guides/sbs-vs-duplex-board) explains the difference."
     ],
     "highlights": [
       {
@@ -57,7 +57,7 @@ export const categoriesData = [
     "heading": "Custom Stickers for Branding & Product Packaging",
     "intro": [
       "Create attractive product labels and branded stickers with customized printing options. Suitable for packaging, promotions, labeling and business branding.",
-      "Choose paper for everyday labels, vinyl for moisture resistance, or PVC for extra durability — supplied on sheets or rolls, and cut to any shape you need."
+      "Choose paper for everyday labels, vinyl for moisture resistance, or PVC for extra durability — supplied on sheets or rolls, and cut to any shape you need. Compare them in our [sticker material guide](/guides/paper-vs-vinyl-vs-pvc-stickers)."
     ],
     "highlights": [
       {
@@ -104,10 +104,10 @@ export const categoriesData = [
     "slug": "dtf-stickers",
     "name": "DTF Stickers",
     "tagline": "Custom DTF transfer stickers for apparel decoration and fabric branding.",
-    "heading": "Custom DTF Transfers for Apparel & Fabric Branding",
+    "heading": "Custom DTF Stickers & Transfers for Apparel Branding",
     "intro": [
       "Bring your designs to life with custom DTF transfer stickers. Ideal for apparel decoration, customized clothing and fabric branding applications.",
-      "DTF (direct-to-film) transfers are printed in full color with a white underbase on PET film, then coated with adhesive powder. You press them onto fabric with a heat press — no screens, no minimums per color, and fine detail is preserved."
+      "DTF (direct-to-film) transfers are printed in full color with a white underbase on PET film, then coated with adhesive powder. You press them onto fabric with a heat press — no screens, no minimums per color, and fine detail is preserved. Decorating bottles or other hard surfaces instead? Choose [UV DTF stickers](/uv-dtf-stickers)."
     ],
     "highlights": [
       {
@@ -154,10 +154,10 @@ export const categoriesData = [
     "slug": "uv-dtf-stickers",
     "name": "UV DTF Stickers",
     "tagline": "Premium UV DTF transfer stickers for customized branding and decorative applications.",
-    "heading": "Premium UV DTF Transfers for Custom Branding",
+    "heading": "Premium UV DTF Stickers for Custom Branding",
     "intro": [
       "Enhance your products with customized UV DTF transfer stickers. Suitable for decorative branding and applications on compatible hard surfaces.",
-      "UV DTF stickers are printed with UV-cured inks and varnish, giving a raised, glossy finish. They apply without heat — peel, place, rub and lift the carrier film — making them ideal for bottles, tumblers, packaging and promotional items."
+      "UV DTF stickers are printed with UV-cured inks and varnish, giving a raised, glossy finish. They apply without heat — peel, place, rub and lift the carrier film — making them ideal for bottles, tumblers, packaging and promotional items. Branding clothing instead? Choose [DTF transfers](/dtf-stickers)."
     ],
     "highlights": [
       {
@@ -207,7 +207,7 @@ export const categoriesData = [
     "heading": "Customized Tags That Highlight Your Brand",
     "intro": [
       "Give your products a professional finishing touch with custom hang tags, plastic tags and die-cut tags. Designed according to your brand identity and product requirements.",
-      "Choose premium card or kraft for a classic retail feel, or durable plastic for tags that need to survive water and handling — finished with foil, embossing, eyelets and strings."
+      "Choose premium card or kraft for a classic retail feel, or durable plastic for tags that need to survive water and handling — finished with foil, embossing, eyelets and strings. Our [hang tag design guide](/guides/hang-tag-design-guide) covers sizes, card and finishes."
     ],
     "highlights": [
       {
@@ -263,7 +263,8 @@ export const productsData = [
     "summary": "Custom printed mono carton boxes made from single-layer paperboard — lightweight, sharp to print and sized exactly to your product.",
     "intro": [
       "Mono cartons are folding boxes made from a single layer of paperboard. They're the most widely used retail packaging for cosmetics, medicines, food and personal care products because they print beautifully, fold flat for storage and protect the product without adding bulk.",
-      "We make mono cartons to your exact dimensions on [SBS board](/sbs-boxes) or [duplex board](/duplex-boxes), printed in full color and finished with lamination, spot UV, foil stamping or embossing. Choose a box style that suits your packing line and shelf display."
+      "We make mono cartons to your exact dimensions on [SBS board](/sbs-boxes) or [duplex board](/duplex-boxes), printed in full color and finished with lamination, spot UV, foil stamping or embossing. Choose a box style that suits your packing line and shelf display.",
+      "To quote your mono carton boxes, we need the inside dimensions (length \u00d7 width \u00d7 height), the box style, your preferred board and GSM, the quantity and any finishes. Not sure? Tell us the product and its weight and we'll suggest a board and style, or read what drives [custom box prices](/guides/custom-box-price-factors) before you order."
     ],
     "features": [
       {
@@ -406,8 +407,9 @@ export const productsData = [
     "heading": "SBS Boxes — Premium Solid Bleached Sulphate Packaging",
     "summary": "Premium boxes made from solid bleached sulphate board — bright white through and through, for crisp print and a luxury finish.",
     "intro": [
-      "SBS (Solid Bleached Sulphate) is a premium paperboard made from bleached virgin pulp. It's white on both sides and through the core, with a smooth coated surface that reproduces fine detail, rich colors and metallic finishes beautifully.",
-      "That makes SBS the board of choice for cosmetics, fragrances, premium food and gift packaging, where the box is part of the product experience. We print and finish SBS boxes to your size and style — pair it with foil, embossing or soft-touch lamination for a high-end feel. For everyday packaging, compare our [duplex boxes](/duplex-boxes)."
+      "SBS boxes are made from SBS (solid bleached sulphate), a premium paperboard of bleached virgin pulp. It's white on both sides and through the core, with a smooth coated surface that reproduces fine detail, rich colors and metallic finishes beautifully.",
+      "That makes SBS the board of choice for cosmetics, fragrances, premium food and gift packaging, where the box is part of the product experience. We print and finish SBS boxes to your size and style — pair it with foil, embossing or soft-touch lamination for a high-end feel. For everyday packaging, compare our [duplex boxes](/duplex-boxes).",
+      "For most SBS boxes, 300\u2013350 GSM gives a crisp, rigid carton; heavier products or larger panels may need 400 GSM or an insert. Share your product size and weight and we'll recommend the right thickness. Our guide to [SBS vs duplex board](/guides/sbs-vs-duplex-board) explains when the premium board is worth it."
     ],
     "features": [
       {
@@ -547,8 +549,9 @@ export const productsData = [
     "heading": "Duplex Boxes — Economical Printed Cartons for Everyday Products",
     "summary": "Printed duplex board boxes that balance cost and quality — the dependable choice for FMCG, hardware and high-volume products.",
     "intro": [
-      "Duplex board is a multi-layer paperboard with a coated white printing surface and a grey or white back. It's sturdy, prints well and costs less than SBS, which is why it's used for a huge range of everyday consumer goods.",
-      "We produce duplex boxes in custom sizes and styles with full-color printing and protective coatings. They're a smart choice when you need large quantities of attractive, reliable packaging on a budget. For a more premium look, see [SBS boxes](/sbs-boxes)."
+      "Duplex boxes are made from duplex board, a multi-layer paperboard with a coated white printing surface and a grey or white back. It's sturdy, prints well and costs less than SBS, which is why it's used for a huge range of everyday consumer goods.",
+      "We produce duplex boxes in custom sizes and styles with full-color printing and protective coatings. They're a smart choice when you need large quantities of attractive, reliable packaging on a budget. For a more premium look, see [SBS boxes](/sbs-boxes).",
+      "Duplex boxes are priced mainly by size, board GSM, quantity and finish, so small changes can make a big difference on large orders. Ask us whether a slight size adjustment would fit more boxes per sheet, and read [what affects box prices](/guides/custom-box-price-factors) to plan your budget."
     ],
     "features": [
       {
@@ -688,7 +691,8 @@ export const productsData = [
     "summary": "Self-adhesive paper stickers for product labels, MRP, packaging seals and branding — economical, crisp and supplied on sheets or rolls.",
     "intro": [
       "Paper gumming stickers are self-adhesive labels printed on paper with a peel-off backing. They're the most economical way to label products, seal packaging and add branding, and they print sharp text and vibrant color.",
-      "We print paper stickers in any size or shape — rectangles, circles, ovals or [die-cut outlines](/die-cut-stickers) — with gloss, matte or laminated finishes. For labels that will face moisture, choose [vinyl](/vinyl-gumming-stickers) or [PVC](/pvc-gumming-stickers) instead."
+      "We print paper stickers in any size or shape — rectangles, circles, ovals or [die-cut outlines](/die-cut-stickers) — with gloss, matte or laminated finishes. For labels that will face moisture, choose [vinyl](/vinyl-gumming-stickers) or [PVC](/pvc-gumming-stickers) instead.",
+      "When you order paper gumming stickers, tell us the label size and shape, the paper and finish, the quantity, and whether you apply them by hand (sheets) or by machine (rolls, with core size and unwind direction). Our [label material guide](/guides/paper-vs-vinyl-vs-pvc-stickers) helps you decide between paper, vinyl and PVC."
     ],
     "features": [
       {
@@ -819,7 +823,8 @@ export const productsData = [
     "summary": "Flexible, water-resistant vinyl stickers for bottles, containers and products that get handled, chilled or washed.",
     "intro": [
       "Vinyl gumming stickers are printed on flexible vinyl film with a strong self-adhesive backing. Vinyl resists water, oil and scuffing far better than paper, and it conforms to curved surfaces like bottles and tubs.",
-      "Choose white vinyl for bold, opaque color or transparent vinyl for a \"no-label\" look on glass and clear plastic. We print vinyl stickers on sheets or rolls and can cut them to any shape. For even more rigidity and durability, see [PVC gumming stickers](/pvc-gumming-stickers)."
+      "Choose white vinyl for bold, opaque color or transparent vinyl for a \"no-label\" look on glass and clear plastic. We print vinyl stickers on sheets or rolls and can cut them to any shape. For even more rigidity and durability, see [PVC gumming stickers](/pvc-gumming-stickers).",
+      "Vinyl gumming stickers are the right choice for shampoo and cosmetic bottles, cleaning products, beverages, chilled foods and anything that gets wet or squeezed. Tell us the container, the label size and whether it goes on by hand or machine, and see our [label material guide](/guides/paper-vs-vinyl-vs-pvc-stickers) for a side-by-side comparison."
     ],
     "features": [
       {
@@ -947,7 +952,8 @@ export const productsData = [
     "summary": "Thick, tear-resistant PVC stickers that stand up to water, oil, heat and handling — in white, transparent and metallic finishes.",
     "intro": [
       "PVC gumming stickers are printed on a thicker plastic film than vinyl, giving them extra rigidity and resistance to tearing, oil and chemicals. They're the go-to label for appliances, electrical products, industrial containers and anything that needs to last.",
-      "Choose white, transparent or metallic silver and gold PVC for a premium, durable label. We supply PVC stickers on sheets or rolls and can die-cut them to any shape."
+      "Choose white, transparent or metallic silver and gold PVC for a premium, durable label. We supply PVC stickers on sheets or rolls and can die-cut them to any shape. For squeezable bottles, flexible [vinyl gumming stickers](/vinyl-gumming-stickers) are the better fit.",
+      "PVC gumming stickers are used for appliance rating and specification labels, machine and control-panel labels, industrial drums and metallic logo badges. Tell us the surface, the conditions the label faces (heat, oil, outdoor use) and the quantity, and we'll recommend the right PVC and adhesive."
     ],
     "features": [
       {
@@ -1076,7 +1082,8 @@ export const productsData = [
     "summary": "Custom die-cut stickers cut precisely around your logo or artwork, on paper, vinyl or PVC — for branding that stands out.",
     "intro": [
       "Die-cut stickers are cut to the exact outline of your design instead of a standard rectangle or circle. The result is a clean, professional sticker that looks like your logo — perfect for packaging, promotions, merchandise and product branding.",
-      "We die-cut stickers on [paper](/paper-gumming-stickers), [vinyl](/vinyl-gumming-stickers) or [PVC](/pvc-gumming-stickers), as individual stickers or kiss-cut on sheets and rolls, with gloss, matte or laminated finishes."
+      "We die-cut stickers on [paper](/paper-gumming-stickers), [vinyl](/vinyl-gumming-stickers) or [PVC](/pvc-gumming-stickers), as individual stickers or kiss-cut on sheets and rolls, with gloss, matte or laminated finishes.",
+      "For die-cut stickers, send your design as a vector file with the cut line on its own layer, or send the artwork and we'll create the cut line for you. Keep thin points and very small gaps above about 1 mm so the stickers peel cleanly. Our [artwork guide](/guides/print-ready-artwork-guide) covers bleed, safe area and file formats."
     ],
     "features": [
       {
@@ -1206,7 +1213,8 @@ export const productsData = [
     "summary": "Custom DTF transfers and gang sheets printed in full color with a white underbase — ready to heat-press onto cotton, polyester and blends.",
     "intro": [
       "DTF (direct-to-film) transfer stickers let you put full-color, detailed designs on almost any fabric. Your artwork is printed onto PET film with color and white inks, coated with adhesive powder and cured — then you press it onto the garment and peel the film away.",
-      "Order individual designs or combine many logos and sizes on a single gang sheet to make the most of every print. DTF works on light and dark fabrics, and there are no extra costs for more colors. For pre-cut logos and labels, see [DTF heat transfer stickers](/dtf-heat-transfer-stickers)."
+      "Order individual designs or combine many logos and sizes on a single gang sheet to make the most of every print. DTF works on light and dark fabrics, and there are no extra costs for more colors. For pre-cut logos and labels, see [DTF heat transfer stickers](/dtf-heat-transfer-stickers).",
+      "DTF transfer stickers are priced by the size of the print or gang sheet and the quantity. To get the most from a gang sheet, send all your designs at their final print sizes with transparent backgrounds. Not sure whether you need DTF or UV DTF? Read [DTF vs UV DTF stickers](/guides/dtf-vs-uv-dtf-stickers)."
     ],
     "features": [
       {
@@ -1333,7 +1341,8 @@ export const productsData = [
     "summary": "Pre-cut DTF heat transfer stickers for logos, neck labels and garment branding — consistent, full color and quick to apply in bulk.",
     "intro": [
       "DTF heat transfer stickers are individual, pre-cut transfers made for repeat garment branding — chest logos, sleeve prints, neck labels and care labels. Each piece is printed in full color with a white base and ready to press.",
-      "They're ideal for apparel brands and uniform suppliers who press the same design on hundreds of garments. Order them by quantity in your sizes; for many different designs on one sheet, choose [DTF transfer gang sheets](/dtf-transfer-stickers)."
+      "They're ideal for apparel brands and uniform suppliers who press the same design on hundreds of garments. Order them by quantity in your sizes; for many different designs on one sheet, choose [DTF transfer gang sheets](/dtf-transfer-stickers).",
+      "Send your logo, the print size for each position (for example 9 cm chest, 25 cm back, 5 cm neck label) and the quantity of each. We'll share pressing instructions with your DTF heat transfer stickers; test one garment first, and see our [DTF vs UV DTF guide](/guides/dtf-vs-uv-dtf-stickers) if you also brand hard goods."
     ],
     "features": [
       {
@@ -1456,7 +1465,8 @@ export const productsData = [
     "summary": "Custom UV DTF stickers that apply without heat to glass, metal, plastic and more — with a vivid, raised, glossy finish.",
     "intro": [
       "UV DTF stickers are printed with UV-cured inks, white and clear varnish on a transfer film, then laminated with a carrier film. To apply, you peel the backing, press the design onto the surface and lift the carrier — leaving only the design behind, with no background or edges.",
-      "They bond to smooth, hard surfaces like glass, metal, hard plastics, acrylic, ceramic and wood, and the varnish layer gives a raised, premium texture. Use them for product branding, packaging, promotional items and decorative pieces. For fabric, choose [DTF transfer stickers](/dtf-transfer-stickers)."
+      "They bond to smooth, hard surfaces like glass, metal, hard plastics, acrylic, ceramic and wood, and the varnish layer gives a raised, premium texture. Use them for product branding, packaging, promotional items and decorative pieces. For fabric, choose [DTF transfer stickers](/dtf-transfer-stickers).",
+      "For the best adhesion, apply UV DTF stickers to a clean, dry, smooth surface: wipe it with isopropyl alcohol first, press firmly for several seconds and let the decal settle before handling. Send your designs at their final sizes, and read [DTF vs UV DTF stickers](/guides/dtf-vs-uv-dtf-stickers) if you're also branding fabric."
     ],
     "features": [
       {
@@ -1578,7 +1588,8 @@ export const productsData = [
     "summary": "Custom UV transfer stickers made to your logo, size and shape — including cup and bottle wraps — for premium branding on hard surfaces.",
     "intro": [
       "Custom UV transfer stickers take the UV DTF process and make it yours — your logo, your colors, your exact dimensions. They're ideal when you want a branded, premium finish on products, packaging or merchandise without screen printing or engraving.",
-      "Order logo decals for corporate gifts, full wraps for cups and tumblers, or branded labels for cosmetic and beverage packaging. Every order is printed from your artwork after you approve a proof. See [UV DTF stickers](/uv-dtf-sticker-printing) for how the process works."
+      "Order logo decals for corporate gifts, full wraps for cups and tumblers, or branded labels for cosmetic and beverage packaging. Every order is printed from your artwork after you approve a proof. See [UV DTF stickers](/uv-dtf-sticker-printing) for how the process works.",
+      "For a cup or tumbler wrap, measure the height of the printable area and the circumference, or send us the item's model, and we'll size the custom UV transfer stickers to fit. For logo decals, tell us the width you need on each item. See our [print-ready artwork guide](/guides/print-ready-artwork-guide) for file set-up."
     ],
     "features": [
       {
@@ -1703,7 +1714,8 @@ export const productsData = [
     "summary": "Custom printed hang tags for apparel and products — on premium art card or kraft, with foil, embossing, eyelets and strings.",
     "intro": [
       "A hang tag is often the first thing a customer touches. Custom hang tags carry your brand, price, size and care information while making your product look finished and retail-ready.",
-      "We print hang tags on premium art card or kraft card, single or double-sided, in standard or custom die-cut shapes. Add foil stamping, embossing or spot UV, and choose how they attach — punched hole, metal eyelet, cotton string or loop pins. For water-resistant tags, see [plastic tags](/plastic-tags)."
+      "We print hang tags on premium art card or kraft card, single or double-sided, in standard or custom die-cut shapes. Add foil stamping, embossing or spot UV, and choose how they attach — punched hole, metal eyelet, cotton string or loop pins. For water-resistant tags, see [plastic tags](/plastic-tags).",
+      "To quote custom hang tags, tell us the size and shape, the card and GSM, single or double-sided printing, finishes, the attachment and the quantity, and whether tags should be pre-strung. Our [hang tag design guide](/guides/hang-tag-design-guide) walks through each choice."
     ],
     "features": [
       {
@@ -1839,7 +1851,8 @@ export const productsData = [
     "summary": "Durable PVC and PP plastic tags printed to your design — for products, garments and plants that face water, handling and the outdoors.",
     "intro": [
       "Plastic tags don't tear, curl or soak through. Printed on PVC or PP sheet, they keep your brand and product information intact through moisture, washing, handling and outdoor exposure.",
-      "Choose white, frosted or transparent plastic, in standard or custom die-cut shapes, with holes, eyelets or pre-punched slots for ties. For a classic printed-card look, see [custom hang tags](/custom-hang-tags)."
+      "Choose white, frosted or transparent plastic, in standard or custom die-cut shapes, with holes, eyelets or pre-punched slots for ties. For a classic printed-card look, see [custom hang tags](/custom-hang-tags).",
+      "Plastic tags are used for swimwear, sportswear and outdoor gear, plants and nurseries, cables, tools and industrial parts. Tell us the size, the material and thickness you prefer, how the tag attaches and the quantity, or read the [hang tag design guide](/guides/hang-tag-design-guide) for help deciding what to print."
     ],
     "features": [
       {

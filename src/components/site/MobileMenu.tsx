@@ -108,6 +108,8 @@ export function MobileMenu({ open, onClose, nav, phone, whatsappHref, pathname }
 
           <ul className="mt-4 flex flex-col">
             {[
+              { href: '/industries', label: 'Industries' },
+              { href: '/guides', label: 'Buyer Guides' },
               { href: '/about', label: 'About Us' },
               { href: '/contact', label: 'Contact Us' },
             ].map((l) => (

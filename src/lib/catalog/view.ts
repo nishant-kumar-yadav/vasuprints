@@ -6,7 +6,12 @@ export type { Category, Faq, Feature, Product, ProductImage } from '@/schemas/ca
 export interface CatalogData {
   categories: Category[];
   products: Product[];
+  /** ISO date each slug last changed (sitemap lastmod). */
+  updated?: Record<string, string>;
 }
+
+/** Date the built-in content files last changed. Bump when editing src/content. */
+export const CONTENT_UPDATED = '2026-11-04';
 
 /**
  * Read-only view over published catalog content with the lookups pages need.
@@ -15,8 +20,10 @@ export interface CatalogData {
 export class CatalogView {
   readonly categories: Category[];
   readonly products: Product[];
+  private readonly updated: Record<string, string>;
 
   constructor(data: CatalogData) {
+    this.updated = data.updated ?? {};
     this.categories = data.categories.filter((c) => c.status === 'published').sort((a, b) => a.sortOrder - b.sortOrder);
     const live = new Set(this.categories.map((c) => c.slug));
     this.products = data.products
@@ -50,6 +57,9 @@ export class CatalogView {
   }
   categoryName(p: Product) {
     return this.getCategory(p.category)?.name ?? '';
+  }
+  lastModified(slug: string): string {
+    return this.updated[slug] ?? CONTENT_UPDATED;
   }
   allSlugs() {
     return [...this.categories.map((c) => c.slug), ...this.products.map((p) => p.slug)];

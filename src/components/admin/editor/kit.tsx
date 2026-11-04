@@ -1,9 +1,10 @@
 'use client';
 
 import { useRef, useState, type ReactNode } from 'react';
-import { AlertCircle, ArrowDown, ArrowUp, ImagePlus, Loader2, Plus, Trash2, X } from 'lucide-react';
+import { AlertCircle, ArrowDown, ArrowUp, CircleAlert, CircleCheck, ImagePlus, Loader2, Plus, Trash2, X } from 'lucide-react';
 import { ICON_NAMES, DynamicIcon } from '@/components/site/DynamicIcon';
 import { cn } from '@/lib/cn';
+import { seoChecks, seoScore, type SeoInput } from '@/lib/seo-score';
 
 export type Errors = Record<string, string>;
 
@@ -433,4 +434,34 @@ export function slugify(s: string) {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '')
     .slice(0, 80);
+}
+
+/** Live on-page SEO checklist under the search preview. */
+export function SeoChecklist({ input }: { input: SeoInput }) {
+  const checks = seoChecks(input);
+  const score = seoScore(checks);
+  const tone = score >= 85 ? 'text-[#166534] bg-[#DCFCE7]' : score >= 60 ? 'text-[#92400E] bg-[#FEF3C7]' : 'text-[#991B1B] bg-[#FEE2E2]';
+  return (
+    <div className="rounded-lg border border-border bg-white p-4">
+      <div className="flex items-center justify-between gap-3">
+        <p className="text-sm font-semibold text-navy-900">SEO checklist</p>
+        <span className={cn('rounded-full px-2.5 py-0.5 text-xs font-semibold tabular-nums', tone)}>{score}/100</span>
+      </div>
+      <ul className="mt-3 flex flex-col gap-2">
+        {checks.map((c) => (
+          <li key={c.id} className="flex items-start gap-2.5 text-sm">
+            {c.ok ? (
+              <CircleCheck className="mt-0.5 size-4 shrink-0 text-[#166534]" aria-label="Done" />
+            ) : (
+              <CircleAlert className="mt-0.5 size-4 shrink-0 text-[#B45309]" aria-label="To improve" />
+            )}
+            <span>
+              <span className="text-navy-900">{c.label}</span>
+              {!c.ok && c.hint ? <span className="block text-text-secondary">{c.hint}</span> : null}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }

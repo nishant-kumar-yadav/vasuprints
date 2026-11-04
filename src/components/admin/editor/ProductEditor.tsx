@@ -10,7 +10,7 @@ import type { Product } from '@/schemas/catalog';
 import { ConfirmDialog } from '../ConfirmDialog';
 import { useToast } from '../Toaster';
 import { PublishBadge } from '../ui';
-import { Field, IconPicker, ImageManager, Repeat, Section, SeoPreview, Select, TagInput, Toggle, slugify, type Errors } from './kit';
+import { SeoChecklist, Field, IconPicker, ImageManager, Repeat, Section, SeoPreview, Select, TagInput, Toggle, slugify, type Errors } from './kit';
 import { useEditor } from './useEditor';
 import { fieldLabel } from './labels';
 
@@ -283,6 +283,19 @@ export function ProductEditor({
               onChange={(v) => set('seo', { ...p.seo, description: v })}
             />
             <SeoPreview title={p.seo.title ? `${p.seo.title} | VasuPrint` : ''} description={p.seo.description} path={`/${p.slug}`} />
+            <SeoChecklist
+              input={{
+                keyword: p.name,
+                slug: p.slug,
+                title: p.seo.title,
+                description: p.seo.description,
+                heading: p.heading,
+                intro: p.intro,
+                body: [p.summary, ...p.features.flatMap((f) => [f.title, f.body]), ...p.faqs.flatMap((f) => [f.q, f.a]), ...p.specs.map((x) => `${x.label} ${x.value}`), ...p.applications],
+                imageAlts: p.images.map((im) => im.alt),
+                faqCount: p.faqs.filter((f) => f.q.trim()).length,
+              }}
+            />
           </Section>
         </div>
 

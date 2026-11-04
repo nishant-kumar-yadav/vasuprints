@@ -7,7 +7,7 @@ import { RevealObserver } from '@/components/site/Reveal';
 import { SourceCapture } from '@/components/site/SourceCapture';
 import { Analytics } from '@/components/site/Analytics';
 import { getCatalog } from '@/lib/catalog';
-import { navTree } from '@/lib/nav';
+import { navTree, resourceIndex } from '@/lib/nav';
 import { JsonLd, organizationLd } from '@/lib/seo';
 import { buildWhatsAppUrl, whatsappTexts } from '@/lib/whatsapp';
 
@@ -26,7 +26,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
         Skip to content
       </a>
       <JsonLd data={organizationLd()} />
-      <Header nav={navTree(catalog)} phone={phone} whatsappHref={wa} promo={megaPromo} />
+      <Header nav={navTree(catalog)} resources={resourceIndex()} phone={phone} whatsappHref={wa} promo={megaPromo} />
       <main id="main" tabIndex={-1} className="outline-none">
         {children}
       </main>

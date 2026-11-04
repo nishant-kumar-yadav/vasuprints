@@ -1,13 +1,19 @@
 import 'server-only';
+import { after } from 'next/server';
 import { revalidatePath, updateTag } from 'next/cache';
 import { CATALOG_TAG } from '@/lib/catalog';
+import { pingIndexNow } from '@/lib/indexnow';
 import { connectDb } from '@/lib/db/connect';
 import { CategoryModel, ProductModel, RedirectModel } from '@/models/catalog';
 
-/** Admin edits must show on the public site immediately. */
-export function revalidateCatalog() {
+/**
+ * Admin edits must show on the public site immediately. `changed` lists public paths whose content changed;
+ * search engines that support IndexNow are told after the response is sent.
+ */
+export function revalidateCatalog(changed: string[] = []) {
   updateTag(CATALOG_TAG);
   revalidatePath('/', 'layout');
+  if (changed.length) after(() => pingIndexNow(changed));
 }
 
 export async function listAdminProducts() {

@@ -1,4 +1,5 @@
 import type { CatalogView } from '@/lib/catalog/view';
+import { allGuides, allIndustries } from '@/lib/resources';
 
 export interface NavCategory {
   slug: string;
@@ -19,4 +20,32 @@ export function navTree(catalog: CatalogView): NavCategory[] {
       keywords: [...p.applications, ...p.options.materials, ...p.options.formats, ...p.options.finishes].join(' ').toLowerCase(),
     })),
   }));
+}
+
+export interface NavResource {
+  href: string;
+  title: string;
+  kind: 'Guide' | 'Industry';
+  sub: string;
+  keywords: string;
+}
+
+/** Guides and industry pages for the header search (titles and short keywords only). */
+export function resourceIndex(): NavResource[] {
+  return [
+    ...allIndustries().map((i) => ({
+      href: `/industries/${i.slug}`,
+      title: i.name,
+      kind: 'Industry' as const,
+      sub: 'Packaging & labels',
+      keywords: `${i.excerpt} ${i.seoTitle}`.toLowerCase(),
+    })),
+    ...allGuides().map((g) => ({
+      href: `/guides/${g.slug}`,
+      title: g.title,
+      kind: 'Guide' as const,
+      sub: g.topic,
+      keywords: `${g.seoTitle} ${g.excerpt}`.toLowerCase(),
+    })),
+  ];
 }

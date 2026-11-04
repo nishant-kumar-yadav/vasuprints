@@ -18,7 +18,8 @@ z.config({
 /** URLs that catalog slugs may never take (ARCHITECTURE §4.1). */
 export const RESERVED_SLUGS = [
   'about', 'contact', 'get-a-quote', 'admin', 'api', 'privacy-policy', 'terms-and-conditions', 'shipping-policy',
-  'refund-policy', 'sitemap.xml', 'robots.txt', 'images', '_next', 'media', 'icon.svg',
+  'refund-policy', 'sitemap.xml', 'robots.txt', 'images', '_next', 'media', 'icon.svg', 'guides', 'industries',
+  'opengraph-image', 'indexnow',
 ] as const;
 
 export const slugSchema = z

@@ -25,7 +25,7 @@ export const seoData: Record<string, { title: string; description: string }> = {
     "description": "Custom printed stickers and labels — paper, vinyl and PVC gumming stickers and die-cut stickers for packaging, branding and product labeling. Get a quote."
   },
   "/dtf-stickers": {
-    "title": "Custom DTF Transfer Stickers",
+    "title": "Custom DTF Transfer Stickers for Apparel & Fabric",
     "description": "Custom DTF transfer stickers for T-shirts, hoodies, uniforms and fabric branding. Vibrant full-color heat transfers printed to your artwork. Request a quote."
   },
   "/uv-dtf-stickers": {

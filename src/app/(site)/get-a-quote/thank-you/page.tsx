@@ -7,7 +7,7 @@ import { getCatalog } from '@/lib/catalog';
 import { metaFor } from '@/lib/seo';
 import { buildWhatsAppUrl, whatsappTexts } from '@/lib/whatsapp';
 
-export const metadata = metaFor('/get-a-quote/thank-you', { noindex: true });
+export const metadata = metaFor('/get-a-quote/thank-you', { noindex: true, ogKey: 'get-a-quote' });
 
 const next = [
   'We review your specifications',

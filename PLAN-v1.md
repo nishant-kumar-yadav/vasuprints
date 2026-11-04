@@ -82,6 +82,15 @@ Everything from the original P2/P3 scope except deployment, built on the v1 fron
 - **Home:** the capabilities intro stays in view while the lists scroll, with an "Ask us" button.
 - **Image storage decision:** launch photos in the repo, admin uploads on Cloudinary (free tier), customer artwork stays private on the server disk with off-site backups.
 
+## SEO pass (built)
+
+- 7 buyer guides (/guides) and 6 industry pages (/industries) targeting research and industry searches, linked from products, categories, home, header, footer and search.
+- Third intro paragraph with buying advice on all 13 products; contextual links in category intros; shipping-policy tables fixed (they were not rendering).
+- Connected JSON-LD graph (Organization/LocalBusiness, WebSite, Product with specs, CollectionPage, Article, Service, Breadcrumb, FAQ).
+- Fixed: pages had no og:image, site name or locale (page metadata replaced the layout's). Share cards now at stable /og URLs.
+- Sitemap lastmod from data plus image entries; verification env vars; staging noindex; IndexNow on admin publish.
+- Admin SEO checklist with score; `pnpm seo:audit` crawler; SEO unit tests. Lighthouse mobile: SEO 100, a11y 100, performance 93–97.
+
 ## Needed from the owner
 
 Kept current in `NEEDED-FROM-OWNER.md` next to this file.

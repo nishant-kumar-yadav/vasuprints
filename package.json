@@ -16,7 +16,8 @@
     "check:placeholders": "tsx scripts/check-placeholders.ts",
     "db:dev": "docker compose up -d mongo mailpit",
     "test:e2e": "playwright test",
-    "images": "tsx scripts/images.ts"
+    "images": "tsx scripts/images.ts",
+    "seo:audit": "tsx scripts/seo-audit.ts"
   },
   "dependencies": {
     "@node-rs/argon2": "^2.2.2",

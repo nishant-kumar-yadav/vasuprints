@@ -54,7 +54,7 @@ export const saveCategory = adminAction(
       await ProductModel.updateMany({ category: existing.slug }, { $set: { category: c.slug } });
       if (existing.status === 'published') await recordRedirect(existing.slug, c.slug);
     }
-    revalidateCatalog();
+    revalidateCatalog([`/${c.slug}`, ...(existing.slug !== c.slug ? [`/${existing.slug}`] : [])]);
     return { id: String(existing._id), slug: c.slug };
   },
 );

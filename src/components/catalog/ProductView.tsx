@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Check, Phone } from 'lucide-react';
 import { LinkButton } from '@/components/ui/Button';
 import { Breadcrumbs } from '@/components/site/Breadcrumbs';
@@ -10,11 +11,13 @@ import { ShareButton } from '@/components/site/ShareButton';
 import { MobileActionBar } from '@/components/site/MobileActionBar';
 import { ProcessSteps } from '@/components/site/ProcessSteps';
 import { RichText } from '@/components/site/RichText';
+import { RelatedGuides } from '@/components/site/Resources';
 import { Section, SectionHeader } from '@/components/site/Section';
 import { Chip, SpecTable } from '@/components/site/SpecTable';
 import { ctas } from '@/content/pages/global';
 import type { CatalogView, Product } from '@/lib/catalog/view';
 import { JsonLd, absoluteUrl, productLd } from '@/lib/seo';
+import { guidesFor, industriesFor } from '@/lib/resources';
 import { buildWhatsAppUrl, telUrl, whatsappTexts } from '@/lib/whatsapp';
 import { Gallery } from './Gallery';
 import { SubNav } from './SubNav';
@@ -41,6 +44,8 @@ export function ProductView({ product: p, catalog }: { product: Product; catalog
   const tel = telUrl();
   const related = catalog.related(p);
   const quickSpecs = p.specs.slice(0, 3);
+  const guides = guidesFor([p.slug]);
+  const industries = industriesFor(p.slug);
 
   return (
     <>
@@ -193,6 +198,20 @@ export function ProductView({ product: p, catalog }: { product: Product; catalog
               </li>
             ))}
           </ul>
+          {industries.length ? (
+            <p className="mt-8 flex flex-wrap items-center gap-x-2 gap-y-2 text-[15px] text-text-secondary">
+              <span className="font-medium text-navy-900">Popular with:</span>
+              {industries.map((ind) => (
+                <Link
+                  key={ind.slug}
+                  href={`/industries/${ind.slug}`}
+                  className="rounded-full border border-border bg-white px-3 py-1 text-sm font-medium text-navy-800 transition-colors hover:border-teal-500 hover:text-teal-700"
+                >
+                  {ind.name}
+                </Link>
+              ))}
+            </p>
+          ) : null}
         </div>
       </Section>
 
@@ -208,8 +227,10 @@ export function ProductView({ product: p, catalog }: { product: Product; catalog
         </div>
       </Section>
 
+      <RelatedGuides guides={guides} tone="surface" />
+
       {related.length ? (
-        <Section tone="surface" labelledBy="rel-title">
+        <Section labelledBy="rel-title">
           <div className="container-site">
             <SectionHeader id="rel-title" eyebrow="Related products" title="You may also need" />
             <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">

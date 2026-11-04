@@ -4,13 +4,13 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowRight, CornerDownLeft, Search, X } from 'lucide-react';
 import { cn } from '@/lib/cn';
-import type { NavCategory } from '@/lib/nav';
+import type { NavCategory, NavResource } from '@/lib/nav';
 
 interface Hit {
   href: string;
   title: string;
   sub: string;
-  kind: 'Category' | 'Product';
+  kind: 'Category' | 'Product' | 'Guide' | 'Industry';
   score: number;
 }
 
@@ -19,7 +19,7 @@ const synonyms: Record<string, string> = {
   apparel: 'dtf', glass: 'uv', bottle: 'vinyl', jar: 'uv', mug: 'uv', tumbler: 'uv', transfer: 'dtf', heat: 'dtf',
 };
 
-function search(nav: NavCategory[], q: string): Hit[] {
+function search(nav: NavCategory[], resources: NavResource[], q: string): Hit[] {
   const words = q.toLowerCase().trim().split(/\s+/).filter(Boolean);
   if (!words.length) {
     return nav.map((c) => ({ href: `/${c.slug}`, title: c.name, sub: `${c.products.length} products`, kind: 'Category' as const, score: 0 }));
@@ -43,18 +43,23 @@ function search(nav: NavCategory[], q: string): Hit[] {
       if (ps) hits.push({ href: `/${p.slug}`, title: p.name, sub: c.name, kind: 'Product', score: ps });
     }
   }
+  // Guides and industry pages rank below products so a product match always comes first.
+  for (const r of resources) {
+    const rs = score({ name: r.title.toLowerCase(), rest: r.keywords });
+    if (rs) hits.push({ href: r.href, title: r.title, sub: r.sub, kind: r.kind, score: rs - 2 });
+  }
   return hits.sort((a, b) => b.score - a.score).slice(0, 8);
 }
 
 /** Header product finder: button + ⌘K / Ctrl+K / "/" shortcut, keyboard navigable results. */
-export function ProductSearch({ nav, compact }: { nav: NavCategory[]; compact?: boolean }) {
+export function ProductSearch({ nav, resources = [], compact }: { nav: NavCategory[]; resources?: NavResource[]; compact?: boolean }) {
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState('');
   const [active, setActive] = useState(0);
   const dialog = useRef<HTMLDialogElement>(null);
   const input = useRef<HTMLInputElement>(null);
   const router = useRouter();
-  const hits = useMemo(() => search(nav, q), [nav, q]);
+  const hits = useMemo(() => search(nav, resources, q), [nav, resources, q]);
 
   useEffect(() => {
     // Both header variants are mounted (one hidden by breakpoint); only the desktop one owns the shortcut.
@@ -96,11 +101,12 @@ export function ProductSearch({ nav, compact }: { nav: NavCategory[]; compact?: 
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="inline-flex h-10 items-center gap-2 rounded-md border border-border bg-surface pl-3 pr-2 text-sm text-text-secondary transition-colors hover:border-navy-200 hover:text-navy-900"
+          aria-label="Search products"
+          className="inline-flex h-10 items-center gap-2 whitespace-nowrap rounded-md border border-border bg-surface px-2.5 text-sm text-text-secondary transition-colors hover:border-navy-200 hover:text-navy-900 xl:pl-3 xl:pr-2"
         >
           <Search className="size-4" aria-hidden />
-          <span>Search products</span>
-          <kbd className="ml-2 rounded border border-border bg-white px-1.5 py-0.5 font-sans text-[11px] font-semibold text-text-muted">/</kbd>
+          <span className="hidden xl:inline">Search products</span>
+          <kbd className="ml-2 hidden rounded border border-border bg-white px-1.5 py-0.5 font-sans text-[11px] font-semibold text-text-muted xl:inline">/</kbd>
         </button>
       )}
       <dialog

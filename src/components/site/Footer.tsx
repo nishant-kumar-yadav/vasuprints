@@ -16,6 +16,14 @@ const quickLinks = [
   { href: '/get-a-quote', label: 'Get a Quote' },
 ];
 
+const resources = [
+  { href: '/industries', label: 'Industries' },
+  { href: '/guides', label: 'Buyer Guides' },
+  { href: '/guides/print-ready-artwork-guide', label: 'Artwork Guide' },
+  { href: '/guides/dtf-vs-uv-dtf-stickers', label: 'DTF vs UV DTF' },
+  { href: '/guides/sbs-vs-duplex-board', label: 'SBS vs Duplex' },
+];
+
 const legal = [
   { href: '/privacy-policy', label: 'Privacy Policy' },
   { href: '/terms-and-conditions', label: 'Terms & Conditions' },
@@ -46,7 +54,7 @@ export function Footer({ categories }: { categories: { slug: string; name: strin
             </LinkButton>
           </div>
 
-          <nav aria-label="Footer" className="grid grid-cols-2 gap-8 lg:col-span-5 lg:grid-cols-2">
+          <nav aria-label="Footer" className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-5">
             <div>
               <FooterHeading>Quick Links</FooterHeading>
               <ul className="flex flex-col gap-1.5">
@@ -66,6 +74,18 @@ export function Footer({ categories }: { categories: { slug: string; name: strin
                   <li key={c.slug}>
                     <Link href={`/${c.slug}`} className={linkCls}>
                       {c.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <FooterHeading>Resources</FooterHeading>
+              <ul className="flex flex-col gap-1.5">
+                {resources.map((l) => (
+                  <li key={l.href}>
+                    <Link href={l.href} className={linkCls}>
+                      {l.label}
                     </Link>
                   </li>
                 ))}

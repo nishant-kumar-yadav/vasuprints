@@ -27,6 +27,26 @@ export const business = {
   gstin: PLACEHOLDER as string,
   businessHours: PLACEHOLDER as string, // "Mon–Sat, 10:00–19:00 IST"
   jurisdictionCity: PLACEHOLDER as string,
+  /** Year the business started, e.g. "2015" (shown in structured data). */
+  foundingYear: PLACEHOLDER as string,
+  /** Map pin for local search, e.g. { lat: 28.6139, lng: 77.209 }. */
+  geo: null as { lat: number; lng: number } | null,
+  /** Opening hours for Google, e.g. [{ days: ['Mo','Tu','We','Th','Fr','Sa'], opens: '10:00', closes: '19:00' }]. */
+  openingHours: [] as { days: ('Mo' | 'Tu' | 'We' | 'Th' | 'Fr' | 'Sa' | 'Su')[]; opens: string; closes: string }[],
+  /**
+   * Public profiles of the business. Every URL here is linked from the structured data (sameAs),
+   * which helps Google connect the site with its Business Profile and directory listings.
+   */
+  profiles: {
+    googleBusiness: '',
+    instagram: '',
+    facebook: '',
+    linkedin: '',
+    youtube: '',
+    indiamart: '',
+    justdial: '',
+    tradeindia: '',
+  } as Record<string, string>,
 };
 
 export function isSet(value: string | undefined | null): value is string {

@@ -8,13 +8,15 @@ import { CtaBand } from '@/components/site/CtaBand';
 import { FeatureCard, ProductCard } from '@/components/site/Cards';
 import { CropMarks } from '@/components/site/motifs/Motifs';
 import { ProcessSteps } from '@/components/site/ProcessSteps';
+import { IndustryCard, RelatedGuides } from '@/components/site/Resources';
 import { Section, SectionHeader } from '@/components/site/Section';
 import { Chip } from '@/components/site/SpecTable';
 import { TrustStrip } from '@/components/site/TrustStrip';
 import { ctas } from '@/content/pages/global';
 import { home } from '@/content/pages/home';
 import { getCatalog } from '@/lib/catalog';
-import { metaFor } from '@/lib/seo';
+import { allGuides, allIndustries } from '@/lib/resources';
+import { JsonLd, metaFor, websiteLd } from '@/lib/seo';
 
 export const metadata = metaFor('/');
 
@@ -23,6 +25,7 @@ export default async function HomePage() {
   const { hero, intro, why, featured, capabilities } = home;
   return (
     <>
+      <JsonLd data={websiteLd()} />
       {/* S1 Hero */}
       <section className="relative overflow-hidden pb-16 pt-10 lg:pb-24 lg:pt-16" aria-labelledby="hero-title">
         <div
@@ -109,6 +112,30 @@ export default async function HomePage() {
         </div>
       </Section>
 
+      {/* S4b Industries */}
+      <Section tone="surface" labelledBy="ind-title">
+        <div className="container-site">
+          <SectionHeader
+            id="ind-title"
+            eyebrow="INDUSTRIES WE SERVE"
+            title="Packaging and labels for your industry"
+            action={
+              <Link href="/industries" className="group inline-flex items-center gap-1.5 font-semibold text-teal-700 hover:text-teal-800">
+                All industries
+                <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
+              </Link>
+            }
+          />
+          <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {allIndustries().map((i) => (
+              <li key={i.slug} data-reveal>
+                <IndustryCard industry={i} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Section>
+
       {/* S5 Process */}
       <ProcessSteps />
 
@@ -165,6 +192,9 @@ export default async function HomePage() {
           </div>
         </div>
       </Section>
+
+      {/* S7b Guides */}
+      <RelatedGuides guides={allGuides().slice(0, 3)} title="Answers before you order" />
 
       {/* S8 CTA */}
       <CtaBand {...ctas.main} />

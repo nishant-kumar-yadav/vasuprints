@@ -10,7 +10,7 @@ import type { Category } from '@/schemas/catalog';
 import { ConfirmDialog } from '../ConfirmDialog';
 import { useToast } from '../Toaster';
 import { Notice, PublishBadge } from '../ui';
-import { Field, IconPicker, ImageManager, Repeat, Section, SeoPreview, slugify } from './kit';
+import { Field, IconPicker, ImageManager, Repeat, Section, SeoChecklist, SeoPreview, slugify } from './kit';
 import { useEditor } from './useEditor';
 import { fieldLabel } from './labels';
 
@@ -164,6 +164,19 @@ export function CategoryEditor({ id, initial, status: initialStatus, productCoun
             <Field id="seo-title" label="Title" value={c.seo.title} max={60} error={e('seo.title')} onChange={(v) => set('seo', { ...c.seo, title: v })} />
             <Field id="seo-description" label="Description" multiline rows={3} value={c.seo.description} max={170} soft={160} error={e('seo.description')} onChange={(v) => set('seo', { ...c.seo, description: v })} />
             <SeoPreview title={c.seo.title ? `${c.seo.title} | VasuPrint` : ''} description={c.seo.description} path={`/${c.slug}`} />
+            <SeoChecklist
+              input={{
+                keyword: c.name,
+                slug: c.slug,
+                title: c.seo.title,
+                description: c.seo.description,
+                heading: c.heading,
+                intro: c.intro,
+                body: [c.tagline, ...c.highlights.flatMap((f) => [f.title, f.body]), ...c.faqs.flatMap((f) => [f.q, f.a])],
+                imageAlts: c.image ? [c.image.alt] : [],
+                faqCount: c.faqs.filter((f) => f.q.trim()).length,
+              }}
+            />
           </Section>
         </div>
 

@@ -6,7 +6,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { ArrowRight, ChevronDown, Menu, Phone } from 'lucide-react';
 import { LinkButton } from '@/components/ui/Button';
 import { cn } from '@/lib/cn';
-import type { NavCategory } from '@/lib/nav';
+import type { NavCategory, NavResource } from '@/lib/nav';
 import { Logo } from './Logo';
 import { MobileMenu } from './MobileMenu';
 import { ProductSearch } from './ProductSearch';
@@ -14,12 +14,13 @@ import { Art } from './art/Art';
 
 interface HeaderProps {
   nav: NavCategory[];
+  resources: NavResource[];
   phone: { display: string; href: string } | null;
   whatsappHref: string;
   promo: { title: string; text: string; link: string };
 }
 
-export function Header({ nav, phone, whatsappHref, promo }: HeaderProps) {
+export function Header({ nav, resources, phone, whatsappHref, promo }: HeaderProps) {
   const pathname = usePathname();
   const [scroll, setScroll] = useState(0);
   const [megaOpen, setMegaOpen] = useState(false);
@@ -93,7 +94,7 @@ export function Header({ nav, phone, whatsappHref, promo }: HeaderProps) {
         <Logo />
 
         {/* Desktop nav */}
-        <nav aria-label="Main" className="hidden flex-1 items-center gap-1 pl-6 lg:flex">
+        <nav aria-label="Main" className="hidden flex-1 items-center gap-0.5 pl-4 lg:flex xl:gap-1 xl:pl-6">
           <div onMouseEnter={hoverOpen} onMouseLeave={hoverClose}>
             <button
               ref={triggerRef}
@@ -102,7 +103,7 @@ export function Header({ nav, phone, whatsappHref, promo }: HeaderProps) {
               aria-controls="mega-menu"
               onClick={() => setMegaOpen((o) => !o)}
               className={cn(
-                'inline-flex h-11 items-center gap-1 rounded-md px-3.5 text-[15px] font-medium transition-colors hover:bg-navy-50',
+                'inline-flex h-11 items-center gap-1 whitespace-nowrap rounded-md px-2.5 text-[15px] font-medium transition-colors hover:bg-navy-50 xl:px-3.5',
                 productsActive || megaOpen ? 'text-navy-900' : 'text-navy-800',
               )}
             >
@@ -113,6 +114,12 @@ export function Header({ nav, phone, whatsappHref, promo }: HeaderProps) {
               />
             </button>
           </div>
+          <NavLink href="/industries" active={pathname.startsWith('/industries')}>
+            Industries
+          </NavLink>
+          <NavLink href="/guides" active={pathname.startsWith('/guides')}>
+            Guides
+          </NavLink>
           <NavLink href="/about" active={pathname === '/about'}>
             About Us
           </NavLink>
@@ -121,8 +128,8 @@ export function Header({ nav, phone, whatsappHref, promo }: HeaderProps) {
           </NavLink>
         </nav>
 
-        <div className="hidden items-center gap-5 lg:flex">
-          <ProductSearch nav={nav} />
+        <div className="hidden items-center gap-3 lg:flex xl:gap-5">
+          <ProductSearch nav={nav} resources={resources} />
           {phone ? (
             <a href={phone.href} className="inline-flex items-center gap-2 text-sm font-medium text-navy-800 hover:text-teal-700">
               <Phone className="size-4 text-teal-700" aria-hidden />
@@ -138,7 +145,7 @@ export function Header({ nav, phone, whatsappHref, promo }: HeaderProps) {
 
         {/* Mobile controls */}
         <div className="flex items-center gap-1 lg:hidden">
-          <ProductSearch nav={nav} compact />
+          <ProductSearch nav={nav} resources={resources} compact />
           {pathname !== '/get-a-quote' ? (
             <LinkButton href="/get-a-quote" size="sm">
               Get a Quote
@@ -244,8 +251,8 @@ function NavLink({ href, active, children }: { href: string; active: boolean; ch
       href={href}
       aria-current={active ? 'page' : undefined}
       className={cn(
-        'relative inline-flex h-11 items-center rounded-md px-3.5 text-[15px] font-medium text-navy-800 transition-colors hover:bg-navy-50 hover:text-navy-900',
-        active && 'text-navy-900 after:absolute after:inset-x-3.5 after:bottom-1.5 after:h-0.5 after:rounded-full after:bg-teal-500',
+        'relative inline-flex h-11 items-center whitespace-nowrap rounded-md px-2.5 text-[15px] font-medium text-navy-800 xl:px-3.5 transition-colors hover:bg-navy-50 hover:text-navy-900',
+        active && 'text-navy-900 after:absolute after:inset-x-2.5 after:bottom-1.5 xl:after:inset-x-3.5 after:h-0.5 after:rounded-full after:bg-teal-500',
       )}
     >
       {children}

@@ -2,7 +2,7 @@ import {
   BadgeCheck, Boxes, Copy, CupSoda, Droplets, Eraser, Eye, Flame, Gem, Gift, GlassWater, Hand, Handshake,
   IndianRupee, Layers, LayoutGrid, Link as LinkIcon, MessageSquareText, MessagesSquare, Package, Palette, PenTool,
   Ruler, Scissors, Shapes, ShieldCheck, Shirt, SlidersHorizontal, Sparkles, Sun, Tag, Target, Thermometer, Timer,
-  Type, UtensilsCrossed, Waves, CircleCheck, type LucideIcon,
+  Type, UtensilsCrossed, Waves, CircleCheck, Pill, ShoppingBag, BookOpen, type LucideIcon,
 } from 'lucide-react';
 
 /** Curated icon set referenced by name from content (DESIGN-SYSTEM §7). */
@@ -10,7 +10,7 @@ const icons: Record<string, LucideIcon> = {
   BadgeCheck, Boxes, Copy, CupSoda, Droplets, Eraser, Eye, Flame, Gem, Gift, GlassWater, Hand, Handshake,
   IndianRupee, Layers, LayoutGrid, Link: LinkIcon, MessageSquareText, MessagesSquare, Package, Palette, PenTool,
   Ruler, Scissors, Shapes, ShieldCheck, Shirt, SlidersHorizontal, Sparkles, Sun, Tag, Target, Thermometer, Timer,
-  Type, UtensilsCrossed, Waves,
+  Type, UtensilsCrossed, Waves, Pill, ShoppingBag, BookOpen,
 };
 
 export function DynamicIcon({ name, className }: { name: string; className?: string }) {

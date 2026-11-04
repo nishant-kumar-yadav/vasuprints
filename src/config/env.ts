@@ -24,6 +24,13 @@ const schema = z.object({
   QUOTE_NOTIFY_TO: optional,
   NEXT_PUBLIC_TURNSTILE_SITE_KEY: optional,
   NEXT_PUBLIC_GA_ID: optional,
+  /** Search engine ownership tokens (content of the verification meta tag). */
+  GOOGLE_SITE_VERIFICATION: optional,
+  BING_SITE_VERIFICATION: optional,
+  /** IndexNow key (8–128 letters, digits or dashes). When set, published catalog changes are pinged to Bing and others. */
+  INDEXNOW_KEY: z.string().regex(/^[A-Za-z0-9-]{8,128}$/).optional().or(z.literal('').transform(() => undefined)),
+  /** Force noindex (e.g. a staging copy on its own domain). Staging hosts are also detected automatically. */
+  SEO_NOINDEX: z.enum(['true', 'false']).default('false'),
   TURNSTILE_SECRET_KEY: optional,
   IP_HASH_SALT: optional,
   ADMIN_EMAIL: optional,

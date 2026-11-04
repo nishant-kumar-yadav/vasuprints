@@ -65,7 +65,7 @@ export const saveProduct = adminAction(
     if (!existing) {
       const max = await ProductModel.findOne({ category: p.category }, { sortOrder: 1 }).sort({ sortOrder: -1 }).lean();
       const created = await ProductModel.create({ ...p, sortOrder: (max?.sortOrder ?? -1) + 1 });
-      revalidateCatalog();
+      revalidateCatalog(p.status === 'published' ? [`/${p.slug}`, `/${p.category}`] : []);
       return { id: String(created._id), slug: p.slug, status: p.status };
     }
 
@@ -75,7 +75,8 @@ export const saveProduct = adminAction(
       if (existing.status === 'published') await recordRedirect(existing.slug, p.slug);
       await ProductModel.updateMany({ related: existing.slug }, { $set: { 'related.$': p.slug } });
     }
-    revalidateCatalog();
+    const live = p.status === 'published' || existing.status === 'published';
+    revalidateCatalog(live ? [`/${p.slug}`, `/${p.category}`, ...(existing.slug !== p.slug ? [`/${existing.slug}`] : [])] : []);
     return { id: String(existing._id), slug: p.slug, status: p.status };
   },
 );
