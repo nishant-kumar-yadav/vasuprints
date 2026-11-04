@@ -1,0 +1,19 @@
+# Local services for development. Production uses MongoDB Atlas + a real SMTP provider (docs/DEPLOYMENT.md).
+#   pnpm db:dev        start MongoDB and Mailpit
+#   open http://localhost:8025 to read emails the site sends
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    ports:
+      - '127.0.0.1:27017:27017'
+    volumes:
+      - mongo-data:/data/db
+  mailpit:
+    image: axllent/mailpit:v1.21
+    restart: unless-stopped
+    ports:
+      - '127.0.0.1:1025:1025' # SMTP
+      - '127.0.0.1:8025:8025' # web UI
+volumes:
+  mongo-data:

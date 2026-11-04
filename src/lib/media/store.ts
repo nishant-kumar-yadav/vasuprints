@@ -38,9 +38,9 @@ export async function storeImage(buf: Buffer, folder: 'products' | 'categories')
     return uploadToCloudinary(buf, info.kind, folder, e.CLOUDINARY_CLOUD_NAME, e.CLOUDINARY_API_KEY, e.CLOUDINARY_API_SECRET);
   }
   const name = `${randomUUID()}.${info.kind}`;
-  const dir = path.resolve(e.MEDIA_DIR, folder);
+  const dir = path.resolve(/*turbopackIgnore: true*/ e.MEDIA_DIR, folder);
   await mkdir(dir, { recursive: true });
-  await writeFile(path.join(dir, name), buf, { flag: 'wx' });
+  await writeFile(path.join(/*turbopackIgnore: true*/ dir, name), buf, { flag: 'wx' });
   return { src: `/media/${folder}/${name}`, width: info.width, height: info.height };
 }
 

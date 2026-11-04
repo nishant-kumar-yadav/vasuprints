@@ -24,7 +24,7 @@ export class LocalFileStore implements FileStore {
   constructor(private readonly root: string) {}
 
   private abs(rel: string) {
-    const p = path.resolve(this.root, rel);
+    const p = path.resolve(/*turbopackIgnore: true*/ this.root, rel);
     if (!p.startsWith(path.resolve(this.root) + path.sep)) throw new Error('Path escapes upload root');
     return p;
   }
@@ -87,5 +87,5 @@ export class LocalFileStore implements FileStore {
 
 let store: FileStore | null = null;
 export function fileStore(): FileStore {
-  return (store ??= new LocalFileStore(path.resolve(env().UPLOAD_DIR)));
+  return (store ??= new LocalFileStore(path.resolve(/*turbopackIgnore: true*/ env().UPLOAD_DIR)));
 }

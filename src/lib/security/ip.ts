@@ -4,7 +4,7 @@ import { env } from '@/config/env';
 
 /**
  * Client IP. Only trusts X-Forwarded-For when TRUST_PROXY=true (i.e. behind our own Nginx),
- * and then only its first hop. Falls back to a constant so rate limits still apply locally.
+ * and then only its first hop (Nginx overwrites the header). Otherwise a constant, so rate limits still apply.
  */
 export function clientIp(headers: Headers): string {
   if (env().TRUST_PROXY === 'true') {
@@ -14,7 +14,9 @@ export function clientIp(headers: Headers): string {
     const real = headers.get('x-real-ip');
     if (real) return real.trim();
   }
-  return headers.get('x-real-ip')?.trim() || 'local';
+  // Not behind our proxy: forwarding headers are client-controlled, so never use them (they would let
+  // anyone dodge rate limits). Everyone shares one bucket; production runs with TRUST_PROXY=true.
+  return 'local';
 }
 
 /** sha256(ip + salt): we never store raw IP addresses (DPDP data minimisation). */

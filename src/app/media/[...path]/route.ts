@@ -13,7 +13,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ path: s
   }
   const ext = parts[1]!.split('.').pop() as keyof typeof MEDIA_MIME;
   try {
-    const buf = await readFile(path.join(path.resolve(env().MEDIA_DIR), parts[0]!, parts[1]!));
+    const buf = await readFile(path.join(/*turbopackIgnore: true*/ path.resolve(/*turbopackIgnore: true*/ env().MEDIA_DIR), parts[0]!, parts[1]!));
     return new Response(new Uint8Array(buf), {
       headers: {
         'Content-Type': MEDIA_MIME[ext],

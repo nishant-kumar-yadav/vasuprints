@@ -38,9 +38,9 @@ export async function sendEmail(to: string, content: EmailContent, opts: { reply
   }
   const preview = nodemailer.createTransport({ streamTransport: true, buffer: true, newline: 'unix' });
   const info = await preview.sendMail(message);
-  const dir = path.resolve(e.MAIL_DIR);
+  const dir = path.resolve(/*turbopackIgnore: true*/ e.MAIL_DIR);
   await mkdir(dir, { recursive: true });
-  const file = path.join(dir, `${new Date().toISOString().replace(/[:.]/g, '-')}-${content.subject.replace(/[^\w-]+/g, '_').slice(0, 60)}.eml`);
+  const file = path.join(/*turbopackIgnore: true*/ dir, `${new Date().toISOString().replace(/[:.]/g, '-')}-${content.subject.replace(/[^\w-]+/g, '_').slice(0, 60)}.eml`);
   await writeFile(file, info.message as Buffer);
   return { delivered: 'file' as const, file };
 }
