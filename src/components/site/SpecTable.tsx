@@ -3,7 +3,7 @@ import { cn } from '@/lib/cn';
 
 export function SpecTable({ specs, compact, className }: { specs: Product['specs']; compact?: boolean; className?: string }) {
   return (
-    <dl className={cn('divide-y divide-border tabular-nums', className)}>
+    <dl className={cn('divide-y divide-border', className)}>
       {specs.map((s) => (
         <div
           key={s.label}
