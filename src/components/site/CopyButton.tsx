@@ -17,7 +17,7 @@ export function CopyButton({ text, label = 'Copy' }: { text: string; label?: str
           /* clipboard blocked */
         }
       }}
-      className="inline-flex size-9 items-center justify-center rounded-md text-navy-500 hover:bg-white hover:text-navy-900"
+      className="inline-flex size-11 items-center justify-center rounded-md text-navy-500 hover:bg-white hover:text-navy-900 active:bg-white"
       aria-label={done ? 'Copied' : `${label} ${text}`}
     >
       {done ? <Check className="size-4 text-success" aria-hidden /> : <Copy className="size-4" aria-hidden />}

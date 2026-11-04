@@ -10,7 +10,7 @@ import type { Product } from '@/schemas/catalog';
 import { ConfirmDialog } from '../ConfirmDialog';
 import { useToast } from '../Toaster';
 import { PublishBadge } from '../ui';
-import { SeoChecklist, Field, IconPicker, ImageManager, Repeat, Section, SeoPreview, Select, TagInput, Toggle, slugify, type Errors } from './kit';
+import { MobileSaveBar, SeoChecklist, Field, IconPicker, ImageManager, Repeat, Section, SeoPreview, Select, TagInput, Toggle, slugify, type Errors } from './kit';
 import { useEditor } from './useEditor';
 import { fieldLabel } from './labels';
 
@@ -374,6 +374,7 @@ export function ProductEditor({
           </div>
         </aside>
       </div>
+      <MobileSaveBar dirty={dirty} pending={pending} draft={status === 'draft'} onSave={() => submit('save')} />
 
       {id ? (
         <ConfirmDialog

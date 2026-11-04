@@ -22,11 +22,11 @@ export function IconTile({ name, className, inverse }: { name: string; className
 export function FeatureCard({ feature, bordered, className }: { feature: Feature; bordered?: boolean; className?: string }) {
   return (
     <div
-      className={cn('flex flex-col gap-4', bordered && 'rounded-lg border border-border bg-white p-6', className)}
+      className={cn('flex flex-row gap-4 sm:flex-col', bordered && 'rounded-lg border border-border bg-white p-5 sm:p-6', className)}
       data-reveal
     >
       <IconTile name={feature.icon} />
-      <div>
+      <div className="min-w-0 pt-0.5 sm:pt-0">
         <h3 className="text-h4 text-navy-900">{feature.title}</h3>
         <p className="mt-1.5 text-[15px] leading-relaxed text-text-secondary">{feature.body}</p>
       </div>

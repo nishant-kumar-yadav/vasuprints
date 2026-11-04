@@ -147,7 +147,7 @@ export function ArtworkPicker({
       >
         <UploadCloud className="size-8 text-teal-500" strokeWidth={1.5} aria-hidden />
         <span className="text-[15px] text-navy-900">
-          Drag files here or <span className="font-semibold text-teal-700 underline underline-offset-4">browse</span>
+          <span className="pointer-coarse:hidden">Drag files here or </span><span className="font-semibold text-teal-700 underline underline-offset-4"><span className="pointer-coarse:hidden">browse</span><span className="hidden pointer-coarse:inline">Tap to choose files</span></span>
         </span>
         <span className="text-sm text-text-muted">CDR, AI, EPS, PDF, PSD, SVG, PNG, JPG, TIFF or ZIP · up to 3 files · 100 MB each</span>
         <input

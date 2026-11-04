@@ -95,9 +95,9 @@ export default async function LeadPage({ params }: { params: Params }) {
         actions={<CopyButton text={lead.reference} label="Copy reference" />}
       />
 
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
-        <div className="flex min-w-0 flex-col gap-6">
-          <Card title="Request" padded={false}>
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
+        <div className="flex min-w-0 flex-col gap-6 max-lg:contents">
+          <Card title="Request" padded={false} className="max-lg:order-2">
             <dl className="divide-y divide-border">
               {spec
                 .filter(([, v]) => v)
@@ -107,7 +107,7 @@ export default async function LeadPage({ params }: { params: Params }) {
                     className="grid gap-1 px-5 py-3 sm:grid-cols-[180px_1fr] sm:gap-4"
                   >
                     <dt className="text-sm text-text-muted">{k}</dt>
-                    <dd className="whitespace-pre-wrap text-[15px] text-navy-900">
+                    <dd className="min-w-0 whitespace-pre-wrap break-words text-[15px] text-navy-900">
                       {v}
                     </dd>
                   </div>
@@ -117,6 +117,7 @@ export default async function LeadPage({ params }: { params: Params }) {
 
           {r.additional ? (
             <Card
+              className="max-lg:order-3"
               title={
                 lead.kind === "message" ? "Message" : "Additional requirements"
               }
@@ -128,6 +129,7 @@ export default async function LeadPage({ params }: { params: Params }) {
           ) : null}
 
           <Card
+            className="max-lg:order-4"
             title={`Artwork files (${files.length})`}
             padded={files.length === 0}
           >
@@ -178,7 +180,7 @@ export default async function LeadPage({ params }: { params: Params }) {
           </Card>
 
           {sourceRows.length ? (
-            <Card title="Source" padded={false}>
+            <Card title="Source" padded={false} className="max-lg:order-7">
               <dl className="divide-y divide-border">
                 {sourceRows.map(([k, v]) => (
                   <div
@@ -194,8 +196,8 @@ export default async function LeadPage({ params }: { params: Params }) {
           ) : null}
         </div>
 
-        <div className="order-first flex flex-col gap-6 lg:order-none lg:sticky lg:top-8 lg:self-start">
-          <Card>
+        <div className="flex flex-col gap-6 max-lg:contents lg:sticky lg:top-8 lg:self-start">
+          <Card className="max-lg:order-1">
             <p className="font-display text-lg font-bold text-navy-900">
               {c.name}
             </p>
@@ -271,7 +273,7 @@ export default async function LeadPage({ params }: { params: Params }) {
             </div>
           </Card>
 
-          <Card title="Notes">
+          <Card title="Notes" className="max-lg:order-5">
             <LeadNotes
               reference={lead.reference}
               notes={lead.notes.map((n) => ({
@@ -281,7 +283,7 @@ export default async function LeadPage({ params }: { params: Params }) {
             />
           </Card>
 
-          <Card title="Emails" padded={false}>
+          <Card title="Emails" padded={false} className="max-lg:order-6">
             <div className="divide-y divide-border px-5 py-1">
               <EmailDelivery
                 reference={lead.reference}
@@ -300,7 +302,7 @@ export default async function LeadPage({ params }: { params: Params }) {
             </div>
           </Card>
 
-          <Card title="Danger zone">
+          <Card title="Danger zone" className="max-lg:order-8">
             <p className="mb-3 text-sm text-text-secondary">
               Consent recorded {formatDateTime(lead.consent.at)} (notice{" "}
               {lead.consent.noticeVersion}).

@@ -17,6 +17,7 @@ import type { CatalogView, Category } from '@/lib/catalog/view';
 import { guidesFor } from '@/lib/resources';
 import { JsonLd, absoluteUrl, collectionLd } from '@/lib/seo';
 import { buildWhatsAppUrl, whatsappTexts } from '@/lib/whatsapp';
+import { lc } from '@/lib/text';
 
 export function CategoryView({ category: c, catalog }: { category: Category; catalog: CatalogView }) {
   const items = catalog.productsIn(c.slug);
@@ -62,7 +63,7 @@ export function CategoryView({ category: c, catalog }: { category: Category; cat
           <SectionHeader
             id="range-title"
             eyebrow={`${items.length} ${items.length === 1 ? 'product' : 'products'}`}
-            title={`Our ${c.name.toLowerCase()} range`}
+            title={`Our ${lc(c.name)} range`}
             lead={introRest[0] ? <RichText text={introRest[0]} /> : undefined}
           />
           <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -78,7 +79,7 @@ export function CategoryView({ category: c, catalog }: { category: Category; cat
       <Section labelledBy="hl-title">
         <div className="container-site">
           <SectionHeader id="hl-title" eyebrow="Highlights" title="What you can expect" />
-          <div className="mt-12 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-8 grid gap-x-8 gap-y-7 sm:mt-12 sm:gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
             {c.highlights.map((h) => (
               <FeatureCard key={h.title} feature={h} />
             ))}

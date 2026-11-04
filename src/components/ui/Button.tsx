@@ -7,7 +7,7 @@ export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'outline-inver
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 const base =
-  'group/btn inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold transition-[background-color,border-color,color,box-shadow] duration-150 ease-(--ease-out) focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-500 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 select-none';
+  'group/btn inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold transition-[background-color,border-color,color,box-shadow,transform] duration-150 ease-(--ease-out) active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-500 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 select-none';
 
 const variants: Record<ButtonVariant, string> = {
   primary: 'bg-teal-500 text-navy-900 hover:bg-teal-400 active:bg-teal-600',

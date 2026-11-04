@@ -1,4 +1,4 @@
-import { marked } from 'marked';
+import { marked, type Token } from 'marked';
 
 export function slugify(s: string) {
   return s
@@ -25,9 +25,17 @@ export function renderMarkdown(body: string, opts: { breaks?: boolean } = {}): R
     if (depth === 2) toc.push({ id, text });
     return `<h${depth} id="${id}">${text}</h${depth}>`;
   };
-  // Tables scroll on small screens instead of stretching the page.
-  const table = renderer.table.bind(renderer);
-  renderer.table = (t) => `<div class="table-scroll">${table(t)}</div>`;
+  // Tables: every cell carries its column name so phones can show each row as a small card (see .table-stack).
+  renderer.table = function (t) {
+    const inline = (cell: { tokens: Token[] }) => this.parser.parseInline(cell.tokens);
+    const heads = t.header.map((h) => inline(h));
+    const label = (i: number) => heads[i]!.replace(/<[^>]+>/g, '').replace(/"/g, '&quot;');
+    const thead = `<thead><tr>${heads.map((h) => `<th scope="col">${h}</th>`).join('')}</tr></thead>`;
+    const rows = t.rows
+      .map((r) => `<tr>${r.map((c, i) => (i === 0 ? `<th scope="row" data-label="${label(i)}">${inline(c)}</th>` : `<td data-label="${label(i)}">${inline(c)}</td>`)).join('')}</tr>`)
+      .join('');
+    return `<div class="table-scroll table-stack"><table>${thead}<tbody>${rows}</tbody></table></div>`;
+  };
   const html = marked.parse(body, { renderer, async: false, breaks: opts.breaks ?? false });
   const words = body.replace(/[#*|`[\]()>-]/g, ' ').split(/\s+/).filter(Boolean).length;
   return { html, toc, words };

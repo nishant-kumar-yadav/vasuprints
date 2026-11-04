@@ -62,7 +62,7 @@ function FeatureTile({ c, className, items }: { c: Category; className?: string;
       <div className="absolute inset-0 -z-10 transition-transform duration-420 ease-(--ease-out) group-hover:scale-[1.03]">
         <Media image={c.image} k={c.slug === 'packaging-boxes' ? 'sbs-boxes' : c.slug} bg="navy" sizes="(min-width: 1024px) 58vw, 100vw" />
       </div>
-      <div className="absolute inset-x-0 bottom-0 -z-10 h-3/5 bg-gradient-to-t from-navy-950/90 via-navy-950/50 to-transparent" aria-hidden />
+      <div className="absolute inset-x-0 bottom-0 -z-10 h-[85%] bg-gradient-to-t from-navy-950/95 via-navy-950/70 to-transparent sm:h-3/5 sm:from-navy-950/90 sm:via-navy-950/50" aria-hidden />
       <div className="flex items-end justify-between gap-6">
         <div>
           <h3 className="text-h2 text-white">{c.name}</h3>

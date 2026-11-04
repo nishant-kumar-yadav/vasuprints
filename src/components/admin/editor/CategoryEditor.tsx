@@ -10,7 +10,7 @@ import type { Category } from '@/schemas/catalog';
 import { ConfirmDialog } from '../ConfirmDialog';
 import { useToast } from '../Toaster';
 import { Notice, PublishBadge } from '../ui';
-import { Field, IconPicker, ImageManager, Repeat, Section, SeoChecklist, SeoPreview, slugify } from './kit';
+import { Field, IconPicker, ImageManager, MobileSaveBar, Repeat, Section, SeoChecklist, SeoPreview, slugify } from './kit';
 import { useEditor } from './useEditor';
 import { fieldLabel } from './labels';
 
@@ -217,6 +217,7 @@ export function CategoryEditor({ id, initial, status: initialStatus, productCoun
           </div>
         </aside>
       </div>
+      <MobileSaveBar dirty={dirty} pending={pending} draft={status === 'draft'} onSave={() => submit('save')} />
 
       {id ? (
         <ConfirmDialog

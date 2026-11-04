@@ -12,13 +12,13 @@ export function Breadcrumbs({ items }: { items: Crumb[] }) {
   return (
     <nav aria-label="Breadcrumb" className="text-sm text-text-muted">
       <JsonLd data={breadcrumbLd(all)} />
-      <ol className="flex flex-wrap items-center gap-1.5">
+      <ol className="flex min-w-0 items-center gap-1.5 sm:flex-wrap">
         {all.map((c, i) => {
           const last = i === all.length - 1;
           return (
-            <li key={c.href} className="flex items-center gap-1.5">
+            <li key={c.href} className={last ? 'min-w-0 truncate' : 'flex shrink-0 items-center gap-1.5'}>
               {last ? (
-                <span aria-current="page" className="font-medium text-navy-900">
+                <span aria-current="page" className="font-medium text-navy-900" title={c.name}>
                   {c.name}
                 </span>
               ) : (

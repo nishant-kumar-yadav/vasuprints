@@ -31,9 +31,9 @@ export default async function ThankYouPage({ searchParams }: { searchParams: Pro
         </span>
         <h1 className="text-h1 mt-6 text-navy-900">{isMessage ? 'Thank you — we\u2019ve received your message' : 'Thank you — we\u2019ve received your request'}</h1>
         {ref ? (
-          <div className="mt-6 inline-flex items-center gap-3 rounded-full border border-border bg-surface py-1.5 pl-5 pr-1.5">
-            <span className="text-sm text-text-muted">Your reference</span>
-            <span className="font-display text-lg font-bold tabular-nums tracking-wide text-navy-900">{ref}</span>
+          <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-border bg-surface py-1 pl-5 pr-1 sm:gap-3">
+            <span className="text-sm text-text-muted max-[379px]:sr-only">Your reference</span>
+            <span className="whitespace-nowrap font-display text-lg font-bold tabular-nums tracking-wide text-navy-900">{ref}</span>
             <CopyButton text={ref} label="Copy reference" />
           </div>
         ) : null}
@@ -62,10 +62,10 @@ export default async function ThankYouPage({ searchParams }: { searchParams: Pro
           </LinkButton>
         </div>
 
-        <ul className="mt-12 flex flex-wrap justify-center gap-x-6 gap-y-2 border-t border-border pt-8 text-[15px]">
-          {categories.slice(0, 3).map((c) => (
+        <ul className="mt-12 flex flex-wrap justify-center gap-2 border-t border-border pt-8 text-[15px]">
+          {categories.map((c) => (
             <li key={c.slug}>
-              <Link href={`/${c.slug}`} className="font-medium text-teal-700 hover:text-teal-800">
+              <Link href={`/${c.slug}`} className="inline-flex h-10 items-center rounded-full border border-border px-4 font-medium text-navy-800 hover:border-navy-800 hover:bg-navy-50">
                 {c.name}
               </Link>
             </li>

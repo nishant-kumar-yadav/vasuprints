@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { cn, rail, railItem } from '@/lib/cn';
 import { Clock, RefreshCw } from 'lucide-react';
 import { LinkButton } from '@/components/ui/Button';
 import { Breadcrumbs } from '@/components/site/Breadcrumbs';
@@ -117,9 +118,9 @@ export default async function GuidePage({ params }: Props) {
         <Section tone="surface" labelledBy="gp-title">
           <div className="container-site">
             <SectionHeader id="gp-title" eyebrow="Products in this guide" title="Ready to order?" />
-            <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <ul className={cn('mt-8 sm:mt-10 sm:grid-cols-2 lg:grid-cols-4', rail)}>
               {products.map((p) => (
-                <li key={p.slug} data-reveal>
+                <li key={p.slug} className={railItem} data-reveal>
                   <ProductCard product={p} categoryName={catalog.categoryName(p)} />
                 </li>
               ))}

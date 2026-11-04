@@ -22,7 +22,7 @@ export default async function QuotePage() {
     <div className="bg-surface pb-20 pt-10 lg:pb-28 lg:pt-14">
       <div className="container-site grid gap-8 lg:grid-cols-12 lg:gap-8">
         <div className="lg:col-span-8">
-          <div className="rounded-xl border border-border bg-white p-5 sm:p-8 lg:p-12">
+          <div className="rounded-xl border border-border bg-white p-4 min-[400px]:p-5 sm:p-8 lg:p-12">
             <p className="text-eyebrow text-teal-700">GET A QUOTE</p>
             <h1 className="text-h1 mt-3 text-navy-900">Tell us what you need</h1>
             <p className="text-lead mt-4 max-w-[56ch] text-text-secondary">

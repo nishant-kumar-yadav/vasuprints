@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { cn, rail, railItem } from '@/lib/cn';
 import { ArrowRight } from 'lucide-react';
 import { LinkButton } from '@/components/ui/Button';
 import { Breadcrumbs } from '@/components/site/Breadcrumbs';
@@ -16,6 +17,7 @@ import { getCatalog } from '@/lib/catalog';
 import { allIndustries, getGuide, getIndustry } from '@/lib/resources';
 import { JsonLd, ogImagePath, pageMeta, serviceLd } from '@/lib/seo';
 import { buildWhatsAppUrl } from '@/lib/whatsapp';
+import { lc } from '@/lib/text';
 
 export const dynamicParams = false;
 
@@ -39,7 +41,7 @@ export default async function IndustryPage({ params }: Props) {
   const guides = i.guides.map((s) => getGuide(s)).filter((g) => g !== undefined);
   const others = allIndustries().filter((x) => x.slug !== i.slug).slice(0, 3);
   const quoteHref = `/get-a-quote?product=${picks[0]?.slug ?? ''}`;
-  const wa = buildWhatsAppUrl(`Hi VasuPrint, I'm looking for ${i.name.toLowerCase()} packaging/printing. `);
+  const wa = buildWhatsAppUrl(`Hi VasuPrint, I'm looking for ${lc(i.name)} packaging/printing. `);
   const [lead, ...rest] = i.intro;
   return (
     <>
@@ -92,10 +94,10 @@ export default async function IndustryPage({ params }: Props) {
 
       <Section tone="surface" labelledBy="needs-title">
         <div className="container-site">
-          <SectionHeader id="needs-title" eyebrow="What matters" title={`What ${i.name.toLowerCase()} brands need from packaging`} />
-          <ul className="mt-12 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+          <SectionHeader id="needs-title" eyebrow="What matters" title={`What ${lc(i.name)} brands need from packaging`} />
+          <ul className="mt-8 grid gap-x-8 gap-y-7 sm:mt-12 sm:gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
             {i.needs.map((n) => (
-              <li key={n.title} className="flex flex-col gap-4" data-reveal>
+              <li key={n.title} className="flex flex-row gap-4 sm:flex-col" data-reveal>
                 <IconTile name={i.icon} />
                 <div>
                   <h3 className="text-h4 text-navy-900">{n.title}</h3>
@@ -150,9 +152,9 @@ export default async function IndustryPage({ params }: Props) {
       <Section tone="surface" labelledBy="other-title">
         <div className="container-site">
           <SectionHeader id="other-title" eyebrow="Other industries" title="We also work with" />
-          <ul className="mt-10 grid gap-6 md:grid-cols-3">
+          <ul className={cn('mt-8 sm:mt-10 sm:grid-cols-2 lg:grid-cols-3', rail)}>
             {others.map((x) => (
-              <li key={x.slug} data-reveal>
+              <li key={x.slug} className={railItem} data-reveal>
                 <IndustryCard industry={x} />
               </li>
             ))}
@@ -160,7 +162,7 @@ export default async function IndustryPage({ params }: Props) {
         </div>
       </Section>
 
-      <CtaBand title={`Packaging for your ${i.name.toLowerCase()} brand`} text="Share your product, size and quantity. We'll recommend the right material and send a quotation." button="Get a Quote" href={quoteHref} />
+      <CtaBand title={`Packaging for your ${lc(i.name)} brand`} text="Share your product, size and quantity. We'll recommend the right material and send a quotation." button="Get a Quote" href={quoteHref} />
     </>
   );
 }

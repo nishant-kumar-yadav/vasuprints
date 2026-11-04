@@ -13,9 +13,9 @@ export function LogoMark({ className, inverse }: { className?: string; inverse?:
 
 export function Logo({ inverse, className }: { inverse?: boolean; className?: string }) {
   return (
-    <Link href="/" className={cn('inline-flex items-center gap-2.5 rounded-md', className)} aria-label="VasuPrint home">
-      <LogoMark inverse={inverse} />
-      <span className="font-display text-[1.5rem] font-extrabold leading-none tracking-[-0.03em]" aria-hidden>
+    <Link href="/" className={cn('inline-flex shrink-0 items-center gap-2 rounded-md min-[400px]:gap-2.5', className)} aria-label="VasuPrint home">
+      <LogoMark inverse={inverse} className="max-[399px]:size-8" />
+      <span className="font-display text-[1.15rem] font-extrabold min-[360px]:text-[1.3rem] min-[400px]:text-[1.5rem] leading-none tracking-[-0.03em]" aria-hidden>
         <span className={inverse ? 'text-white' : 'text-navy-800'}>Vasu</span>
         <span className={inverse ? 'text-teal-300' : 'text-teal-600'}>Print</span>
       </span>

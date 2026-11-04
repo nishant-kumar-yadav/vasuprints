@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { cn, rail, railItem } from '@/lib/cn';
 import { Check, Phone } from 'lucide-react';
 import { LinkButton } from '@/components/ui/Button';
 import { Breadcrumbs } from '@/components/site/Breadcrumbs';
@@ -21,6 +22,7 @@ import { guidesFor, industriesFor } from '@/lib/resources';
 import { buildWhatsAppUrl, telUrl, whatsappTexts } from '@/lib/whatsapp';
 import { Gallery } from './Gallery';
 import { SubNav } from './SubNav';
+import { lc } from '@/lib/text';
 
 const sections = [
   { id: 'overview', label: 'Overview' },
@@ -111,7 +113,7 @@ export function ProductView({ product: p, catalog }: { product: Product; catalog
           <div className="lg:col-span-7" data-reveal>
             <p className="text-eyebrow text-teal-700">Overview</p>
             <h2 id="ov-title" className="text-h2 mt-3 text-navy-900">
-              About {p.name.toLowerCase()}
+              About {lc(p.name)}
             </h2>
             <div className="mt-6 flex max-w-[68ch] flex-col gap-5 text-[17px] leading-[1.7] text-text-secondary">
               {p.intro.map((para) => (
@@ -184,12 +186,12 @@ export function ProductView({ product: p, catalog }: { product: Product; catalog
       {/* Applications */}
       <Section id="applications" tone="surface" labelledBy="app-title" className="scroll-mt-32">
         <div className="container-site">
-          <SectionHeader id="app-title" eyebrow="Applications" title={`Where ${p.name.toLowerCase()} are used`} />
-          <ul className="mt-10 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+          <SectionHeader id="app-title" eyebrow="Applications" title={`Where ${lc(p.name)} are used`} />
+          <ul className="mt-8 grid grid-cols-1 gap-2.5 min-[480px]:grid-cols-2 sm:mt-10 sm:gap-4 lg:grid-cols-4">
             {p.applications.map((a, i) => (
               <li
                 key={a}
-                className="flex min-h-20 items-center gap-3 rounded-lg border border-border bg-white p-4 text-[15px] font-medium text-navy-900 sm:p-5"
+                className="flex min-h-14 items-center gap-3 rounded-lg border border-border bg-white px-4 py-3 text-[15px] font-medium text-navy-900 sm:min-h-20 sm:p-5"
                 data-reveal
               >
                 <span className="font-display text-sm font-bold tabular-nums text-teal-700">{String(i + 1).padStart(2, '0')}</span>
@@ -233,9 +235,9 @@ export function ProductView({ product: p, catalog }: { product: Product; catalog
         <Section labelledBy="rel-title">
           <div className="container-site">
             <SectionHeader id="rel-title" eyebrow="Related products" title="You may also need" />
-            <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <ul className={cn('mt-8 sm:mt-10 sm:grid-cols-2 lg:grid-cols-4', rail)}>
               {related.map((r) => (
-                <li key={r.slug} data-reveal>
+                <li key={r.slug} className={railItem} data-reveal>
                   <ProductCard product={r} categoryName={catalog.categoryName(r)} />
                 </li>
               ))}

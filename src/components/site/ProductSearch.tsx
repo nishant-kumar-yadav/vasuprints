@@ -94,7 +94,7 @@ export function ProductSearch({ nav, resources = [], compact }: { nav: NavCatego
   return (
     <>
       {compact ? (
-        <button type="button" onClick={() => setOpen(true)} aria-label="Search products" className="inline-flex size-11 items-center justify-center rounded-md text-navy-900 hover:bg-navy-50">
+        <button type="button" onClick={() => setOpen(true)} aria-label="Search products" className="inline-flex size-11 items-center max-[359px]:size-10 justify-center rounded-md text-navy-900 hover:bg-navy-50">
           <Search className="size-5" aria-hidden />
         </button>
       ) : (
@@ -114,7 +114,7 @@ export function ProductSearch({ nav, resources = [], compact }: { nav: NavCatego
         onClose={() => setOpen(false)}
         onClick={(e) => e.target === dialog.current && setOpen(false)}
         aria-label="Search products"
-        className="mx-auto mt-[12vh] w-[calc(100%-32px)] max-w-xl overflow-hidden rounded-xl border border-border bg-white p-0 text-navy-900 shadow-lg backdrop:bg-navy-900/40 backdrop:backdrop-blur-[2px]"
+        className="mx-auto mt-3 w-[calc(100%-24px)] sm:mt-[12vh] sm:w-[calc(100%-32px)] max-w-xl overflow-hidden rounded-xl border border-border bg-white p-0 text-navy-900 shadow-lg backdrop:bg-navy-900/40 backdrop:backdrop-blur-[2px]"
       >
         <div className="flex items-center gap-3 border-b border-border px-4">
           <Search className="size-5 shrink-0 text-teal-600" aria-hidden />
@@ -139,18 +139,23 @@ export function ProductSearch({ nav, resources = [], compact }: { nav: NavCatego
               }
             }}
             placeholder="Boxes, labels for bottles, T-shirt transfers…"
+            type="search"
+            enterKeyHint="go"
+            autoComplete="off"
+            autoCorrect="off"
+            spellCheck={false}
             role="combobox"
             aria-expanded="true"
             aria-controls="search-results"
             aria-activedescendant={hits[active] ? `sr-${active}` : undefined}
             aria-label="Search products"
-            className="h-14 flex-1 bg-transparent text-base outline-none placeholder:text-text-muted"
+            className="h-14 min-w-0 flex-1 bg-transparent text-base outline-none [&::-webkit-search-cancel-button]:hidden placeholder:text-text-muted"
           />
-          <button type="button" onClick={() => setOpen(false)} aria-label="Close search" className="inline-flex size-9 items-center justify-center rounded-md text-navy-400 hover:bg-surface hover:text-navy-900">
+          <button type="button" onClick={() => setOpen(false)} aria-label="Close search" className="-mr-1 inline-flex size-11 items-center justify-center rounded-md text-navy-400 hover:bg-surface hover:text-navy-900">
             <X className="size-4" aria-hidden />
           </button>
         </div>
-        <ul id="search-results" role="listbox" aria-label="Results" className="max-h-[60vh] overflow-y-auto p-2">
+        <ul id="search-results" role="listbox" aria-label="Results" className="max-h-[calc(100dvh-110px)] overflow-y-auto overscroll-contain p-2 sm:max-h-[60vh]">
           {!q.trim() ? <li className="px-3 pb-1 pt-2 text-xs font-semibold uppercase tracking-[0.12em] text-text-muted" role="presentation">Categories</li> : null}
           {hits.map((h, i) => (
             <li
@@ -168,7 +173,8 @@ export function ProductSearch({ nav, resources = [], compact }: { nav: NavCatego
                   {h.kind} · {h.sub}
                 </span>
               </span>
-              {i === active ? <CornerDownLeft className="size-4 text-teal-700" aria-hidden /> : <ArrowRight className="size-4 text-navy-300" aria-hidden />}
+              {i === active ? <CornerDownLeft className="size-4 text-teal-700 pointer-coarse:hidden" aria-hidden /> : null}
+              <ArrowRight className={cn('size-4 text-navy-300', i === active && 'pointer-fine:hidden')} aria-hidden />
             </li>
           ))}
           {q.trim() && !hits.length ? (

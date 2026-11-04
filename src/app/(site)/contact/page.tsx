@@ -66,7 +66,7 @@ export default async function ContactPage() {
                   <a
                     href={r.action.href}
                     {...(r.action.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                    className="shrink-0 rounded-md px-2 py-2 text-sm font-semibold text-teal-700 hover:bg-teal-50 hover:text-teal-800"
+                    className="inline-flex min-h-11 shrink-0 items-center rounded-md px-2 text-sm font-semibold text-teal-700 hover:bg-teal-50 hover:text-teal-800"
                   >
                     {r.action.text}
                   </a>
@@ -75,7 +75,7 @@ export default async function ContactPage() {
             ))}
           </ul>
 
-          <div className="rounded-xl border border-border bg-white p-6 sm:p-8 lg:col-span-7 lg:p-10">
+          <div className="rounded-xl border border-border bg-white p-4 min-[400px]:p-5 sm:p-8 lg:col-span-7 lg:p-10">
             <h2 className="text-h3 text-navy-900">{contact.formTitle}</h2>
             <p className="mt-2 text-[15px] text-text-secondary">
               {contact.formSub}{' '}

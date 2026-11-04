@@ -60,6 +60,8 @@
     -webkit-font-smoothing: antialiased;
     scroll-behavior: smooth;
     scroll-padding-top: 88px;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
   body {
     font-family: var(--font-sans);
@@ -102,21 +104,21 @@
 /* Type scale — DESIGN-SYSTEM §3.1 */
 @utility text-display {
   font-family: var(--font-display);
-  font-size: clamp(2.25rem, 1.6rem + 2.9vw, 4rem);
+  font-size: clamp(2.125rem, 1.5rem + 2.9vw, 4rem);
   line-height: 1.05;
   font-weight: 800;
   letter-spacing: -0.03em;
 }
 @utility text-h1 {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 1.55rem + 2vw, 3.25rem);
+  font-size: clamp(1.75rem, 1.4rem + 2vw, 3.25rem);
   line-height: 1.1;
   font-weight: 800;
   letter-spacing: -0.025em;
 }
 @utility text-h2 {
   font-family: var(--font-display);
-  font-size: clamp(1.625rem, 1.35rem + 1.2vw, 2.5rem);
+  font-size: clamp(1.5rem, 1.25rem + 1.2vw, 2.5rem);
   line-height: 1.15;
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -169,7 +171,10 @@
   }
 }
 @utility section-y {
-  padding-block: 64px;
+  padding-block: 56px;
+  @media (width >= 640px) {
+    padding-block: 72px;
+  }
   @media (width >= 1024px) {
     padding-block: 96px;
   }
@@ -338,4 +343,57 @@
 }
 .prose-policy tbody tr:nth-child(even) td {
   background: color-mix(in srgb, var(--color-surface) 50%, white);
+}
+
+/* Phones: 16px form text stops iOS Safari zooming in on focus (unlayered, so it wins over utilities). */
+@media (max-width: 639px) {
+  input:not([type='checkbox']):not([type='radio']),
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
+/* Comparison tables become one card per row on phones: the first cell is the card title, the rest label: value. */
+@media (max-width: 639px) {
+  .prose-policy .table-stack table {
+    min-width: 0;
+    border: 0;
+  }
+  .prose-policy .table-stack thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .prose-policy .table-stack tr {
+    display: block;
+    margin-bottom: 12px;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .prose-policy .table-stack th[scope='row'] {
+    display: block;
+    border: 0;
+    background: var(--color-surface);
+    padding: 10px 14px;
+    font-weight: 600;
+    color: var(--color-navy-900);
+  }
+  .prose-policy .table-stack td {
+    display: grid;
+    grid-template-columns: minmax(96px, 40%) 1fr;
+    gap: 12px;
+    border: 0;
+    border-top: 1px solid var(--color-border);
+    padding: 10px 14px;
+    background: #fff !important;
+  }
+  .prose-policy .table-stack td::before {
+    content: attr(data-label);
+    font-weight: 500;
+    color: var(--color-text-muted);
+  }
 }

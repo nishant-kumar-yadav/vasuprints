@@ -102,7 +102,7 @@ export default async function Dashboard() {
         })}
       </div>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+      <div className="mt-6 grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
         <Card
           title="Latest leads"
           padded={false}

@@ -22,7 +22,7 @@ export function ShareButton({ title, url, label = 'Share this product with your 
           /* dismissed or blocked */
         }
       }}
-      className="inline-flex items-center gap-1.5 self-center rounded-md px-2 py-1.5 text-sm font-medium text-text-secondary hover:text-navy-900"
+      className="inline-flex min-h-11 items-center gap-1.5 self-center rounded-md px-3 text-sm font-medium text-text-secondary hover:text-navy-900 active:bg-navy-50"
     >
       {copied ? <Check className="size-4 text-success" aria-hidden /> : <Share2 className="size-4" aria-hidden />}
       <span aria-live="polite">{copied ? 'Link copied' : label}</span>

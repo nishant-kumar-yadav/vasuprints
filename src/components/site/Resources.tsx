@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { ArrowRight, BookOpen } from 'lucide-react';
 import type { GuideData, IndustryData } from '@/lib/resources';
-import { cn } from '@/lib/cn';
+import { cn, rail, railItem } from '@/lib/cn';
 import { IconTile } from './Cards';
 import { Section, SectionHeader } from './Section';
 
@@ -67,15 +67,15 @@ export function RelatedGuides({ guides, tone = 'white', title = 'Helpful guides'
           eyebrow="Buyer guides"
           title={title}
           action={
-            <Link href="/guides" className="group inline-flex items-center gap-1.5 font-semibold text-teal-700 hover:text-teal-800">
+            <Link href="/guides" className="group inline-flex min-h-11 items-center gap-1.5 font-semibold text-teal-700 hover:text-teal-800">
               All guides
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
             </Link>
           }
         />
-        <ul className="mt-10 grid gap-6 md:grid-cols-3">
+        <ul className={cn('mt-8 sm:mt-10 sm:grid-cols-2 lg:grid-cols-3', rail)}>
           {guides.map((g) => (
-            <li key={g.slug} data-reveal>
+            <li key={g.slug} className={railItem} data-reveal>
               <GuideCard guide={g} />
             </li>
           ))}

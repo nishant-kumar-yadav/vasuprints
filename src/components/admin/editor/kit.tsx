@@ -3,6 +3,7 @@
 import { useRef, useState, type ReactNode } from 'react';
 import { AlertCircle, ArrowDown, ArrowUp, CircleAlert, CircleCheck, ImagePlus, Loader2, Plus, Trash2, X } from 'lucide-react';
 import { ICON_NAMES, DynamicIcon } from '@/components/site/DynamicIcon';
+import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/cn';
 import { seoChecks, seoScore, type SeoInput } from '@/lib/seo-score';
 
@@ -87,7 +88,7 @@ export function Field({
             aria-invalid={error ? true : undefined}
             aria-describedby={desc}
             onChange={(e) => onChange(e.target.value)}
-            className={cn(control, tone(error), 'resize-y py-2.5 leading-relaxed')}
+            className={cn(control, tone(error), 'resize-y py-2.5 leading-relaxed max-sm:min-h-24 max-sm:max-h-[70vh] max-sm:field-sizing-content')}
           />
         ) : (
           <input
@@ -178,10 +179,10 @@ export function Repeat<T>({
   return (
     <div className="flex flex-col gap-3">
       {items.map((item, i) => (
-        <div key={i} className="flex gap-2 rounded-lg border border-border bg-surface/60 p-3 sm:p-4">
-          <span className="mt-1 inline-flex size-6 shrink-0 items-center justify-center rounded-full bg-white text-xs font-bold tabular-nums text-navy-500 ring-1 ring-border">{i + 1}</span>
-          <div className="min-w-0 flex-1">{render(item, (v) => onChange(items.map((x, k) => (k === i ? v : x))), i)}</div>
-          <div className="flex shrink-0 flex-col gap-1">
+        <div key={i} className="flex flex-wrap gap-2 rounded-lg border border-border bg-surface/60 p-3 sm:flex-nowrap sm:p-4">
+          <span className="mt-2 inline-flex size-6 shrink-0 sm:mt-1 items-center justify-center rounded-full bg-white text-xs font-bold tabular-nums text-navy-500 ring-1 ring-border">{i + 1}</span>
+          <div className="order-last min-w-0 basis-full sm:order-none sm:basis-auto sm:flex-1">{render(item, (v) => onChange(items.map((x, k) => (k === i ? v : x))), i)}</div>
+          <div className="ml-auto flex shrink-0 gap-1 sm:ml-0 sm:flex-col">
             <IconBtn label="Move up" disabled={i === 0} onClick={() => move(i, -1)}>
               <ArrowUp className="size-4" aria-hidden />
             </IconBtn>
@@ -219,7 +220,7 @@ function IconBtn({ label, onClick, disabled, danger, children }: { label: string
       disabled={disabled}
       onClick={onClick}
       className={cn(
-        'inline-flex size-8 items-center justify-center rounded-md text-navy-400 transition-colors disabled:opacity-30',
+        'inline-flex size-10 items-center justify-center rounded-md text-navy-400 transition-colors disabled:opacity-30 sm:size-8',
         danger ? 'hover:bg-danger/10 hover:text-danger' : 'hover:bg-white hover:text-navy-900',
       )}
     >
@@ -463,5 +464,23 @@ export function SeoChecklist({ input }: { input: SeoInput }) {
         ))}
       </ul>
     </div>
+  );
+}
+
+/** Phones and tablets: the publishing panel sits at the very end of a long form, so unsaved changes get a save bar pinned to the bottom. */
+export function MobileSaveBar({ dirty, pending, draft, onSave }: { dirty: boolean; pending: boolean; draft: boolean; onSave: () => void }) {
+  if (!dirty) return null;
+  return (
+    <>
+      <div className="h-20 xl:hidden" aria-hidden />
+      <div className="fixed inset-x-0 bottom-0 z-30 border-t border-border bg-white/95 px-4 pt-3 pb-[max(12px,env(safe-area-inset-bottom))] shadow-[0_-4px_16px_rgb(0_0_0/0.06)] backdrop-blur xl:hidden">
+        <div className="mx-auto flex max-w-3xl items-center justify-between gap-3">
+          <span className="text-sm font-medium text-warning">Unsaved changes</span>
+          <Button onClick={onSave} loading={pending} size="sm" className="h-11 px-5">
+            {draft ? 'Save draft' : 'Save changes'}
+          </Button>
+        </div>
+      </div>
+    </>
   );
 }

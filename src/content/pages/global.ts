@@ -1,3 +1,4 @@
+import { lc } from '@/lib/text';
 // Copy from docs/CONTENT.md §1 (owner-approved where marked there).
 export const trustStrip = ['Custom sizes', 'Bulk orders', 'Artwork support', 'Pan-India dispatch'] as const;
 
@@ -26,7 +27,7 @@ export const ctas = {
     button: 'Get Custom Quotation',
   },
   category: (name: string) => ({
-    title: `Need custom ${name.toLowerCase()}?`,
+    title: `Need custom ${lc(name)}?`,
     text: "Share your size, material and quantity — we'll send a quotation.",
     button: 'Get a Quote',
   }),

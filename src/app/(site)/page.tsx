@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { cn, rail, railItem } from '@/lib/cn';
 import { ArrowRight } from 'lucide-react';
 import { LinkButton } from '@/components/ui/Button';
 import { Media } from '@/components/site/Media';
@@ -83,7 +84,7 @@ export default async function HomePage() {
             ))}
             <Link
               href="/about"
-              className="group inline-flex items-center gap-1.5 self-start text-base font-semibold text-teal-700 hover:text-teal-800"
+              className="group -my-2 inline-flex min-h-11 items-center gap-1.5 self-start text-base font-semibold text-teal-700 hover:text-teal-800"
             >
               {intro.link}
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
@@ -104,7 +105,7 @@ export default async function HomePage() {
       <Section labelledBy="why-title">
         <div className="container-site">
           <SectionHeader id="why-title" eyebrow={why.eyebrow} title={why.title} />
-          <div className="mt-12 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-8 grid gap-x-8 gap-y-7 sm:mt-12 sm:gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
             {why.items.map((f) => (
               <FeatureCard key={f.title} feature={f} />
             ))}
@@ -120,15 +121,15 @@ export default async function HomePage() {
             eyebrow="INDUSTRIES WE SERVE"
             title="Packaging and labels for your industry"
             action={
-              <Link href="/industries" className="group inline-flex items-center gap-1.5 font-semibold text-teal-700 hover:text-teal-800">
+              <Link href="/industries" className="group inline-flex min-h-11 items-center gap-1.5 font-semibold text-teal-700 hover:text-teal-800">
                 All industries
                 <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
               </Link>
             }
           />
-          <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className={cn('mt-8 sm:mt-10 sm:grid-cols-2 lg:grid-cols-3', rail)}>
             {allIndustries().map((i) => (
-              <li key={i.slug} data-reveal>
+              <li key={i.slug} className={railItem} data-reveal>
                 <IndustryCard industry={i} />
               </li>
             ))}
@@ -147,7 +148,7 @@ export default async function HomePage() {
             eyebrow={featured.eyebrow}
             title={featured.title}
             action={
-              <Link href="/#products" className="group inline-flex items-center gap-1.5 font-semibold text-teal-700 hover:text-teal-800">
+              <Link href="/#products" className="group inline-flex min-h-11 items-center gap-1.5 font-semibold text-teal-700 hover:text-teal-800">
                 {featured.link}
                 <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
               </Link>

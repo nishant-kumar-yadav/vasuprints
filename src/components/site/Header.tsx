@@ -144,11 +144,11 @@ export function Header({ nav, resources, phone, whatsappHref, promo }: HeaderPro
         </div>
 
         {/* Mobile controls */}
-        <div className="flex items-center gap-1 lg:hidden">
+        <div className="flex shrink-0 items-center gap-0.5 sm:gap-1 lg:hidden">
           <ProductSearch nav={nav} resources={resources} compact />
           {pathname !== '/get-a-quote' ? (
-            <LinkButton href="/get-a-quote" size="sm">
-              Get a Quote
+            <LinkButton href="/get-a-quote" size="sm" className="px-3 max-[374px]:px-2.5">
+              <span className="max-[374px]:hidden">Get a&nbsp;</span>Quote
             </LinkButton>
           ) : null}
           <button
@@ -156,7 +156,7 @@ export function Header({ nav, resources, phone, whatsappHref, promo }: HeaderPro
             onClick={() => setMobileOpen(true)}
             aria-label="Open menu"
             aria-expanded={mobileOpen}
-            className="inline-flex size-11 items-center justify-center rounded-md text-navy-900 hover:bg-navy-50"
+            className="-mr-1.5 inline-flex size-11 items-center max-[359px]:size-10 justify-center rounded-md text-navy-900 hover:bg-navy-50"
           >
             <Menu className="size-6" aria-hidden />
           </button>
