@@ -7,12 +7,14 @@ import { MapEmbed } from '@/components/site/MapEmbed';
 import { business, formatAddress, isSet, show } from '@/config/business';
 import { contact } from '@/content/pages/about';
 import { quoteCatalog } from '@/lib/quote-catalog';
+import { getCatalog } from '@/lib/catalog';
 import { metaFor } from '@/lib/seo';
 import { buildWhatsAppUrl, telUrl, whatsappTexts } from '@/lib/whatsapp';
 
 export const metadata = metaFor('/contact');
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const catalog = await getCatalog();
   const tel = telUrl();
   const rows = [
     { icon: <Phone className="size-[22px]" strokeWidth={1.5} aria-hidden />, label: 'Phone', value: show(business.phoneDisplay), action: tel ? { href: tel, text: 'Call' } : null },
@@ -82,7 +84,7 @@ export default function ContactPage() {
             </p>
             <div className="mt-8">
               <Suspense fallback={<div className="h-[640px]" aria-hidden />}>
-                <QuoteForm catalog={quoteCatalog()} compact />
+                <QuoteForm catalog={quoteCatalog(catalog)} compact />
               </Suspense>
             </div>
           </div>

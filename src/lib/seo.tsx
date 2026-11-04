@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { business, formatAddress, isSet } from '@/config/business';
 import { seoData } from '@/content/seo-data';
-import type { Faq, Product } from '@/lib/catalog';
+import type { Faq, Product } from '@/lib/catalog/view';
 
 export function absoluteUrl(path: string): string {
   return new URL(path, business.siteUrl).toString();
@@ -21,6 +21,18 @@ export function metaFor(path: string, opts: { noindex?: boolean } = {}): Metadat
     alternates: { canonical: path },
     openGraph: { title, description: s?.description, url: path },
     robots: opts.noindex ? { index: false, follow: true } : undefined,
+  };
+}
+
+/** Metadata for a category or product page from its own SEO fields (editable in admin). */
+export function catalogMeta(item: { slug: string; seo: { title: string; description: string }; images?: { src: string }[] }): Metadata {
+  const path = `/${item.slug}`;
+  const image = item.images?.[0]?.src;
+  return {
+    title: pageTitle(item.seo.title),
+    description: item.seo.description,
+    alternates: { canonical: path },
+    openGraph: { title: item.seo.title, description: item.seo.description, url: path, ...(image ? { images: [image] } : {}) },
   };
 }
 

@@ -1,8 +1,9 @@
 import Link from 'next/link';
 import { Check } from 'lucide-react';
 import { LinkButton } from '@/components/ui/Button';
+import { CopyButton } from '@/components/site/CopyButton';
 import { WhatsAppIcon } from '@/components/site/icons/WhatsApp';
-import { categories } from '@/lib/catalog';
+import { getCatalog } from '@/lib/catalog';
 import { metaFor } from '@/lib/seo';
 import { buildWhatsAppUrl, whatsappTexts } from '@/lib/whatsapp';
 
@@ -15,7 +16,12 @@ const next = [
   'Production and dispatch',
 ];
 
-export default function ThankYouPage() {
+export default async function ThankYouPage({ searchParams }: { searchParams: Promise<{ ref?: string | string[] }> }) {
+  const sp = await searchParams;
+  const raw = Array.isArray(sp.ref) ? sp.ref[0] : sp.ref;
+  const ref = raw && /^VP-\d{4}-\d{6}$/.test(raw) ? raw : null;
+  const { categories } = await getCatalog();
+  const wa = buildWhatsAppUrl(ref ? `Hi VasuPrint, I've sent a quote request (${ref}).` : whatsappTexts.global);
   return (
     <section className="section-y">
       <div className="container-narrow text-center">
@@ -23,6 +29,13 @@ export default function ThankYouPage() {
           <Check className="size-8" strokeWidth={2.5} aria-hidden />
         </span>
         <h1 className="text-h1 mt-6 text-navy-900">Thank you — we&apos;ve received your request</h1>
+        {ref ? (
+          <div className="mt-6 inline-flex items-center gap-3 rounded-full border border-border bg-surface py-1.5 pl-5 pr-1.5">
+            <span className="text-sm text-text-muted">Your reference</span>
+            <span className="font-display text-lg font-bold tabular-nums tracking-wide text-navy-900">{ref}</span>
+            <CopyButton text={ref} label="Copy reference" />
+          </div>
+        ) : null}
         <p className="text-lead mx-auto mt-5 max-w-[52ch] text-text-secondary">
           Our team will review your specifications and get back to you on WhatsApp or email, usually within one business day.
         </p>
@@ -39,7 +52,7 @@ export default function ThankYouPage() {
         </ol>
 
         <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
-          <LinkButton href={buildWhatsAppUrl(whatsappTexts.global)} size="lg" variant="whatsapp" icon={<WhatsAppIcon />}>
+          <LinkButton href={wa} size="lg" variant="whatsapp" icon={<WhatsAppIcon />}>
             Chat on WhatsApp
           </LinkButton>
           <LinkButton href="/" size="lg" variant="secondary" arrow>

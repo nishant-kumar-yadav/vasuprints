@@ -3,6 +3,7 @@ import { Lock } from 'lucide-react';
 import { ContactActions } from '@/components/quote/ContactActions';
 import { QuoteForm } from '@/components/quote/QuoteForm';
 import { quoteCatalog } from '@/lib/quote-catalog';
+import { getCatalog } from '@/lib/catalog';
 import { metaFor } from '@/lib/seo';
 
 export const metadata = metaFor('/get-a-quote');
@@ -14,7 +15,8 @@ const next = [
   'Production and dispatch',
 ];
 
-export default function QuotePage() {
+export default async function QuotePage() {
+  const catalog = await getCatalog();
   return (
     <div className="bg-surface pb-20 pt-10 lg:pb-28 lg:pt-14">
       <div className="container-site grid gap-8 lg:grid-cols-12 lg:gap-8">
@@ -27,7 +29,7 @@ export default function QuotePage() {
             </p>
             <div className="mt-10">
               <Suspense fallback={<div className="h-[1200px]" aria-hidden />}>
-                <QuoteForm catalog={quoteCatalog()} />
+                <QuoteForm catalog={quoteCatalog(catalog)} />
               </Suspense>
             </div>
           </div>

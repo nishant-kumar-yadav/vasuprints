@@ -1,5 +1,5 @@
 import { LinkButton } from '@/components/ui/Button';
-import { Art } from '@/components/site/art/Art';
+import { Media } from '@/components/site/Media';
 import { Breadcrumbs } from '@/components/site/Breadcrumbs';
 import { FeatureCard, ProductCard } from '@/components/site/Cards';
 import { CtaBand } from '@/components/site/CtaBand';
@@ -11,12 +11,12 @@ import { ProcessSteps } from '@/components/site/ProcessSteps';
 import { Section, SectionHeader } from '@/components/site/Section';
 import { TrustStrip } from '@/components/site/TrustStrip';
 import { ctas } from '@/content/pages/global';
-import { productsIn, type Category } from '@/lib/catalog';
+import type { CatalogView, Category } from '@/lib/catalog/view';
 import { absoluteUrl } from '@/lib/seo';
 import { buildWhatsAppUrl, whatsappTexts } from '@/lib/whatsapp';
 
-export function CategoryView({ category: c }: { category: Category }) {
-  const items = productsIn(c.slug);
+export function CategoryView({ category: c, catalog }: { category: Category; catalog: CatalogView }) {
+  const items = catalog.productsIn(c.slug);
   const quoteHref = `/get-a-quote?category=${c.slug}`;
   const wa = buildWhatsAppUrl(whatsappTexts.interest(c.name, absoluteUrl(`/${c.slug}`)));
   const [intro1, ...introRest] = c.intro;
@@ -44,7 +44,7 @@ export function CategoryView({ category: c }: { category: Category }) {
             </div>
             <div className="relative lg:col-span-6">
               <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-surface-2 ring-1 ring-border">
-                <Art k={c.slug} label={`${c.name} by VasuPrint`} />
+                <Media image={c.image} k={c.slug} label={c.image?.alt ?? `${c.name} by VasuPrint`} priority sizes="(min-width: 1024px) 50vw, 100vw" />
               </div>
               <CropMarks inset={-14} size={24} />
             </div>

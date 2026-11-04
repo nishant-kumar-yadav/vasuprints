@@ -2,19 +2,25 @@
 
 import { useRef, useState, type KeyboardEvent } from 'react';
 import { Expand, X } from 'lucide-react';
-import { Art } from '@/components/site/art/Art';
+import { Media } from '@/components/site/Media';
+import type { ProductImage } from '@/lib/catalog/view';
 import { cn } from '@/lib/cn';
 
 /**
  * Product gallery (UI-UX §4.3). Desktop: main image + thumbnail buttons (arrow keys move),
  * click main image for a lightbox. Mobile: edge-to-edge scroll-snap with a counter chip.
+ * Uses uploaded photos when present, otherwise illustration views.
  */
-export function Gallery({ artKey, alts }: { artKey: string; alts: string[] }) {
+export function Gallery({ artKey, alts, images = [] }: { artKey: string; alts: string[]; images?: ProductImage[] }) {
+  const slides = images.length
+    ? images.map((img, i) => ({ image: img as ProductImage | null, alt: img.alt, view: i }))
+    : alts.map((alt, i) => ({ image: null, alt, view: i }));
   const [active, setActive] = useState(0);
   const [mobileIndex, setMobileIndex] = useState(0);
   const dialog = useRef<HTMLDialogElement>(null);
   const thumbs = useRef<(HTMLButtonElement | null)[]>([]);
-  const n = alts.length;
+  const n = slides.length;
+  const current = slides[active] ?? slides[0];
 
   const onThumbKey = (e: KeyboardEvent, i: number) => {
     const dir = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1 : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? -1 : 0;
@@ -24,6 +30,8 @@ export function Gallery({ artKey, alts }: { artKey: string; alts: string[] }) {
     setActive(next);
     thumbs.current[next]?.focus();
   };
+
+  if (!current) return null;
 
   return (
     <div>
@@ -38,15 +46,17 @@ export function Gallery({ artKey, alts }: { artKey: string; alts: string[] }) {
           aria-label="Product images"
           tabIndex={0}
         >
-          {alts.map((alt, i) => (
-            <li key={i} className="aspect-[4/3] w-full shrink-0 snap-center bg-surface-2">
-              <Art k={artKey} view={i} label={alt} />
+          {slides.map((s, i) => (
+            <li key={i} className="relative aspect-[4/3] w-full shrink-0 snap-center bg-surface-2">
+              <Media image={s.image} k={artKey} view={s.view} label={s.alt} priority={i === 0} sizes="100vw" />
             </li>
           ))}
         </ul>
-        <span className="absolute bottom-3 right-4 rounded-full bg-navy-900/80 px-2.5 py-1 text-xs font-semibold tabular-nums text-white" aria-live="polite">
-          {mobileIndex + 1} / {n}
-        </span>
+        {n > 1 ? (
+          <span className="absolute bottom-3 right-4 rounded-full bg-navy-900/80 px-2.5 py-1 text-xs font-semibold tabular-nums text-white" aria-live="polite">
+            {mobileIndex + 1} / {n}
+          </span>
+        ) : null}
       </div>
 
       {/* Desktop gallery */}
@@ -55,35 +65,37 @@ export function Gallery({ artKey, alts }: { artKey: string; alts: string[] }) {
           type="button"
           onClick={() => dialog.current?.showModal()}
           className="group relative block aspect-[4/3] w-full overflow-hidden rounded-xl bg-surface-2 ring-1 ring-border"
-          aria-label={`Enlarge image: ${alts[active] ?? ''}`}
+          aria-label={`Enlarge image: ${current.alt}`}
         >
-          <Art k={artKey} view={active} label={alts[active]} />
+          <Media image={current.image} k={artKey} view={current.view} label={current.alt} sizes="(min-width: 1280px) 700px, 58vw" />
           <span className="absolute right-4 top-4 inline-flex size-10 items-center justify-center rounded-full bg-white/90 text-navy-800 opacity-0 shadow-sm transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
             <Expand className="size-4" aria-hidden />
           </span>
         </button>
-        <div className="mt-4 grid grid-cols-4 gap-3" role="group" aria-label="Choose image">
-          {alts.map((alt, i) => (
-            <button
-              key={i}
-              ref={(el) => {
-                thumbs.current[i] = el;
-              }}
-              type="button"
-              aria-pressed={active === i}
-              aria-label={`Show image ${i + 1}: ${alt}`}
-              tabIndex={active === i ? 0 : -1}
-              onClick={() => setActive(i)}
-              onKeyDown={(e) => onThumbKey(e, i)}
-              className={cn(
-                'aspect-[4/3] overflow-hidden rounded-md bg-surface-2 ring-1 transition-[box-shadow,opacity] duration-150',
-                active === i ? 'ring-2 ring-teal-500' : 'opacity-75 ring-border hover:opacity-100',
-              )}
-            >
-              <Art k={artKey} view={i} />
-            </button>
-          ))}
-        </div>
+        {n > 1 ? (
+          <div className="mt-4 grid grid-cols-4 gap-3" role="group" aria-label="Choose image">
+            {slides.map((s, i) => (
+              <button
+                key={i}
+                ref={(el) => {
+                  thumbs.current[i] = el;
+                }}
+                type="button"
+                aria-pressed={active === i}
+                aria-label={`Show image ${i + 1}: ${s.alt}`}
+                tabIndex={active === i ? 0 : -1}
+                onClick={() => setActive(i)}
+                onKeyDown={(e) => onThumbKey(e, i)}
+                className={cn(
+                  'relative aspect-[4/3] overflow-hidden rounded-md bg-surface-2 ring-1 transition-[box-shadow,opacity] duration-150',
+                  active === i ? 'ring-2 ring-teal-500' : 'opacity-75 ring-border hover:opacity-100',
+                )}
+              >
+                <Media image={s.image} k={artKey} view={s.view} sizes="160px" />
+              </button>
+            ))}
+          </div>
+        ) : null}
       </div>
 
       <dialog
@@ -93,7 +105,7 @@ export function Gallery({ artKey, alts }: { artKey: string; alts: string[] }) {
         aria-label="Image viewer"
       >
         <div className="relative aspect-[4/3] bg-surface-2">
-          <Art k={artKey} view={active} label={alts[active]} />
+          <Media image={current.image} k={artKey} view={current.view} label={current.alt} sizes="92vw" fit="meet" />
           <button
             type="button"
             onClick={() => dialog.current?.close()}
@@ -103,7 +115,7 @@ export function Gallery({ artKey, alts }: { artKey: string; alts: string[] }) {
             <X className="size-5" aria-hidden />
           </button>
         </div>
-        <p className="px-6 py-4 text-sm text-text-secondary">{alts[active]}</p>
+        <p className="px-6 py-4 text-sm text-text-secondary">{current.alt}</p>
       </dialog>
     </div>
   );

@@ -12,7 +12,7 @@ import { RichText } from '@/components/site/RichText';
 import { Section, SectionHeader } from '@/components/site/Section';
 import { Chip, SpecTable } from '@/components/site/SpecTable';
 import { ctas } from '@/content/pages/global';
-import { categoryOf, relatedProducts, type Product } from '@/lib/catalog';
+import type { CatalogView, Product } from '@/lib/catalog/view';
 import { JsonLd, absoluteUrl, productLd } from '@/lib/seo';
 import { buildWhatsAppUrl, telUrl, whatsappTexts } from '@/lib/whatsapp';
 import { Gallery } from './Gallery';
@@ -33,12 +33,12 @@ const optionGroups = [
   ['formats', 'Formats & styles'],
 ] as const;
 
-export function ProductView({ product: p }: { product: Product }) {
-  const cat = categoryOf(p);
+export function ProductView({ product: p, catalog }: { product: Product; catalog: CatalogView }) {
+  const cat = catalog.categoryOf(p);
   const quoteHref = `/get-a-quote?product=${p.slug}`;
   const wa = buildWhatsAppUrl(whatsappTexts.interest(p.name, absoluteUrl(`/${p.slug}`)));
   const tel = telUrl();
-  const related = relatedProducts(p);
+  const related = catalog.related(p);
   const quickSpecs = p.specs.slice(0, 3);
 
   return (
@@ -54,7 +54,7 @@ export function ProductView({ product: p }: { product: Product }) {
           />
           <div className="mt-6 grid gap-8 lg:mt-10 lg:grid-cols-12 lg:gap-12">
             <div className="lg:col-span-7">
-              <Gallery artKey={p.slug} alts={p.imageAlts} />
+              <Gallery artKey={p.slug} alts={p.imageAlts.length ? p.imageAlts : [p.name]} images={p.images} />
             </div>
             <div className="lg:col-span-5">
               <p className="text-eyebrow text-teal-700">{cat.name}</p>
@@ -213,7 +213,7 @@ export function ProductView({ product: p }: { product: Product }) {
             <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {related.map((r) => (
                 <li key={r.slug} data-reveal>
-                  <ProductCard product={r} categoryName={categoryOf(r).name} />
+                  <ProductCard product={r} categoryName={catalog.categoryName(r)} />
                 </li>
               ))}
             </ul>

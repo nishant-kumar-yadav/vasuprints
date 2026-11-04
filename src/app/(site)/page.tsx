@@ -12,12 +12,13 @@ import { Chip } from '@/components/site/SpecTable';
 import { TrustStrip } from '@/components/site/TrustStrip';
 import { ctas } from '@/content/pages/global';
 import { home } from '@/content/pages/home';
-import { categoryOf, featuredProducts } from '@/lib/catalog';
+import { getCatalog } from '@/lib/catalog';
 import { metaFor } from '@/lib/seo';
 
 export const metadata = metaFor('/');
 
-export default function HomePage() {
+export default async function HomePage() {
+  const catalog = await getCatalog();
   const { hero, intro, why, featured, capabilities } = home;
   return (
     <>
@@ -91,7 +92,7 @@ export default function HomePage() {
       <Section tone="surface" id="products" labelledBy="cats-title">
         <div className="container-site">
           <SectionHeader id="cats-title" {...home.categories} />
-          <CategoryBento className="mt-10 lg:mt-14" />
+          <CategoryBento className="mt-10 lg:mt-14" catalog={catalog} />
         </div>
       </Section>
 
@@ -127,9 +128,9 @@ export default function HomePage() {
         </div>
         <div className="container-site mt-10">
           <ul className="no-scrollbar -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-6 sm:overflow-visible sm:px-0 lg:grid-cols-4">
-            {featuredProducts().map((p) => (
+            {catalog.featured().map((p) => (
               <li key={p.slug} className="w-[80%] shrink-0 snap-start sm:w-auto" data-reveal>
-                <ProductCard product={p} categoryName={categoryOf(p).name} />
+                <ProductCard product={p} categoryName={catalog.categoryName(p)} />
               </li>
             ))}
           </ul>

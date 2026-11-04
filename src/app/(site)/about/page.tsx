@@ -6,12 +6,13 @@ import { CropMarks } from '@/components/site/motifs/Motifs';
 import { Section, SectionHeader } from '@/components/site/Section';
 import { about } from '@/content/pages/about';
 import { ctas } from '@/content/pages/global';
-import { categories, productsIn } from '@/lib/catalog';
+import { getCatalog } from '@/lib/catalog';
 import { metaFor } from '@/lib/seo';
 
 export const metadata = metaFor('/about');
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const catalog = await getCatalog();
   return (
     <>
       <section className="pb-16 pt-10 lg:pb-24 lg:pt-16" aria-labelledby="about-title">
@@ -70,9 +71,9 @@ export default function AboutPage() {
         <div className="container-site">
           <SectionHeader id="make-title" eyebrow="What we make" title={about.makeTitle} />
           <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {categories.map((c) => (
+            {catalog.categories.map((c) => (
               <li key={c.slug} data-reveal>
-                <CategoryMiniCard category={c} count={productsIn(c.slug).length} />
+                <CategoryMiniCard category={c} count={catalog.productsIn(c.slug).length} />
               </li>
             ))}
           </ul>

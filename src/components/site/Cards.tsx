@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
-import type { Category, Feature, Product } from '@/lib/catalog';
+import type { Category, Feature, Product } from '@/lib/catalog/view';
 import { cn } from '@/lib/cn';
-import { Art } from './art/Art';
+import { Media } from './Media';
 import { DynamicIcon } from './DynamicIcon';
 
 export function IconTile({ name, className, inverse }: { name: string; className?: string; inverse?: boolean }) {
@@ -45,7 +45,7 @@ export function ProductCard({ product, categoryName, className }: { product: Pro
     >
       <div className="relative aspect-square overflow-hidden bg-surface-2">
         <div className="absolute inset-0 transition-transform duration-420 ease-(--ease-out) group-hover:scale-[1.03]">
-          <Art k={product.slug} />
+          <Media image={product.images[0]} k={product.slug} sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 80vw" />
         </div>
       </div>
       <div className="flex flex-1 flex-col p-5 sm:p-6">
@@ -82,7 +82,7 @@ export function CategoryMiniCard({ category, count }: { category: Category; coun
       className="group flex items-center gap-4 rounded-lg border border-border bg-white p-3 pr-5 transition-[transform,box-shadow] duration-220 ease-(--ease-out) hover:-translate-y-0.5 hover:shadow-md"
     >
       <span className="relative block size-20 shrink-0 overflow-hidden rounded-md bg-surface-2">
-        <Art k={category.slug} view={1} />
+        <Media image={category.image} k={category.slug} view={1} sizes="80px" />
       </span>
       <span className="min-w-0 flex-1">
         <span className="block font-display text-[17px] font-bold text-navy-900">{category.name}</span>

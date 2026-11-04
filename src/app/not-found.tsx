@@ -3,11 +3,12 @@ import { LinkButton } from '@/components/ui/Button';
 import { Footer } from '@/components/site/Footer';
 import { Logo } from '@/components/site/Logo';
 import { DielineFrame } from '@/components/site/motifs/Motifs';
-import { categories } from '@/lib/catalog';
+import { getCatalog } from '@/lib/catalog';
 
 export const metadata = { title: 'Page not found', robots: { index: false } };
 
-export default function NotFound() {
+export default async function NotFound() {
+  const { categories } = await getCatalog();
   return (
     <>
       <header className="border-b border-border">
@@ -41,7 +42,7 @@ export default function NotFound() {
           </ul>
         </div>
       </main>
-      <Footer />
+      <Footer categories={categories} />
     </>
   );
 }

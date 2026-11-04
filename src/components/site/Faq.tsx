@@ -1,5 +1,5 @@
 import { Plus } from 'lucide-react';
-import type { Faq as FaqItem } from '@/lib/catalog';
+import type { Faq as FaqItem } from '@/lib/catalog/view';
 import { JsonLd, faqLd } from '@/lib/seo';
 import { RichText } from './RichText';
 

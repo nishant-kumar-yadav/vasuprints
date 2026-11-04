@@ -4,11 +4,13 @@ import { Footer } from '@/components/site/Footer';
 import { FloatingWhatsApp } from '@/components/site/FloatingWhatsApp';
 import { Header } from '@/components/site/Header';
 import { RevealObserver } from '@/components/site/Reveal';
+import { getCatalog } from '@/lib/catalog';
 import { navTree } from '@/lib/nav';
 import { JsonLd, organizationLd } from '@/lib/seo';
 import { buildWhatsAppUrl, whatsappTexts } from '@/lib/whatsapp';
 
-export default function SiteLayout({ children }: { children: React.ReactNode }) {
+export default async function SiteLayout({ children }: { children: React.ReactNode }) {
+  const catalog = await getCatalog();
   const wa = buildWhatsAppUrl(whatsappTexts.global);
   const phone = isSet(business.phoneDisplay) && isSet(business.phoneE164)
     ? { display: business.phoneDisplay, href: `tel:${business.phoneE164}` }
@@ -22,11 +24,11 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
         Skip to content
       </a>
       <JsonLd data={organizationLd()} />
-      <Header nav={navTree()} phone={phone} whatsappHref={wa} promo={megaPromo} />
+      <Header nav={navTree(catalog)} phone={phone} whatsappHref={wa} promo={megaPromo} />
       <main id="main" tabIndex={-1} className="outline-none">
         {children}
       </main>
-      <Footer />
+      <Footer categories={catalog.categories} />
       <FloatingWhatsApp href={wa} />
       <RevealObserver />
     </>

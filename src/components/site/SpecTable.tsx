@@ -1,4 +1,4 @@
-import type { Product } from '@/lib/catalog';
+import type { Product } from '@/lib/catalog/view';
 import { cn } from '@/lib/cn';
 
 export function SpecTable({ specs, compact, className }: { specs: Product['specs']; compact?: boolean; className?: string }) {

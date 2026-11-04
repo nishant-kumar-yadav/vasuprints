@@ -3,7 +3,6 @@ import { Mail, MapPin, Phone } from 'lucide-react';
 import { LinkButton } from '@/components/ui/Button';
 import { business, formatAddress, isSet, show } from '@/config/business';
 import { footer } from '@/content/pages/global';
-import { categories } from '@/lib/catalog';
 import { buildWhatsAppUrl, telUrl, whatsappTexts } from '@/lib/whatsapp';
 import { Logo } from './Logo';
 import { WhatsAppIcon } from './icons/WhatsApp';
@@ -30,7 +29,7 @@ function FooterHeading({ children }: { children: React.ReactNode }) {
 
 const linkCls = 'inline-flex min-h-8 items-center text-[15px] text-white/80 transition-colors hover:text-white';
 
-export function Footer() {
+export function Footer({ categories }: { categories: { slug: string; name: string }[] }) {
   const tel = telUrl();
   return (
     <footer className="relative overflow-hidden bg-navy-900 pt-16 text-white lg:pt-20">
