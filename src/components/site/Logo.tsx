@@ -17,7 +17,7 @@ export function Logo({ inverse, className }: { inverse?: boolean; className?: st
       <LogoMark inverse={inverse} />
       <span className="font-display text-[1.5rem] font-extrabold leading-none tracking-[-0.03em]" aria-hidden>
         <span className={inverse ? 'text-white' : 'text-navy-800'}>Vasu</span>
-        <span className={inverse ? 'text-teal-300' : 'text-teal-500'}>Print</span>
+        <span className={inverse ? 'text-teal-300' : 'text-teal-600'}>Print</span>
       </span>
     </Link>
   );

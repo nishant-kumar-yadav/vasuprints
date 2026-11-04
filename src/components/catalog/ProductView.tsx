@@ -88,7 +88,7 @@ export function ProductView({ product: p }: { product: Product }) {
                 </div>
               </div>
               <div className="mt-8 rounded-lg border border-border bg-surface px-5 py-2">
-                <p className="text-eyebrow pb-1 pt-3 text-text-muted">Quick specs</p>
+                <p className="text-eyebrow pb-1 pt-3 text-text-secondary">Quick specs</p>
                 <SpecTable specs={quickSpecs} compact />
               </div>
             </div>

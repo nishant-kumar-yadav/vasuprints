@@ -34,11 +34,13 @@ export function Header({ nav, phone, whatsappHref, promo }: HeaderProps) {
     return () => window.removeEventListener('scroll', on);
   }, []);
 
-  // Close menus on route change.
-  useEffect(() => {
+  // Close menus on route change (adjusting state during render, per React docs).
+  const [lastPath, setLastPath] = useState(pathname);
+  if (lastPath !== pathname) {
+    setLastPath(pathname);
     setMegaOpen(false);
     setMobileOpen(false);
-  }, [pathname]);
+  }
 
   const close = useCallback((focusTrigger = false) => {
     setMegaOpen(false);

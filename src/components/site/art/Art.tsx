@@ -102,7 +102,7 @@ export function Art({ k, view = 0, label, className, bg = 'studio', fit = 'slice
     <svg
       viewBox={vb}
       preserveAspectRatio={`xMidYMid ${fit}`}
-      className={cn('block h-full w-full', className)}
+      className={cn('block h-full w-full overflow-hidden', className)}
       role={label ? 'img' : undefined}
       aria-label={label}
       aria-hidden={label ? undefined : true}

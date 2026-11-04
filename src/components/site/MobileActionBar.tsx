@@ -11,8 +11,8 @@ export function MobileActionBar({ quoteHref, whatsappHref }: { quoteHref: string
   useEffect(() => {
     const hero = document.querySelector('[data-hero]');
     if (!hero || !('IntersectionObserver' in window)) {
-      setShow(true);
-      return;
+      const raf = requestAnimationFrame(() => setShow(true));
+      return () => cancelAnimationFrame(raf);
     }
     const io = new IntersectionObserver(([e]) => setShow(!e?.isIntersecting), { threshold: 0 });
     io.observe(hero);

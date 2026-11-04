@@ -36,6 +36,7 @@ export function Gallery({ artKey, alts }: { artKey: string; alts: string[] }) {
             setMobileIndex(Math.round(el.scrollLeft / el.clientWidth));
           }}
           aria-label="Product images"
+          tabIndex={0}
         >
           {alts.map((alt, i) => (
             <li key={i} className="aspect-[4/3] w-full shrink-0 snap-center bg-surface-2">
