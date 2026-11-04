@@ -17,3 +17,5 @@ export function DynamicIcon({ name, className }: { name: string; className?: str
   const Icon = icons[name] ?? CircleCheck;
   return <Icon className={className} strokeWidth={1.5} aria-hidden />;
 }
+
+export const ICON_NAMES = Object.keys(icons).sort();

@@ -1,5 +1,20 @@
 import { z } from 'zod';
 
+// Plain-English defaults for the admin editors (explicit messages elsewhere still win).
+z.config({
+  customError: (iss) => {
+    if (iss.code === 'too_small') {
+      if (iss.origin === 'string') return Number(iss.minimum) <= 1 ? 'This field is required.' : `Use at least ${iss.minimum} characters.`;
+      if (iss.origin === 'array') return `Add at least ${iss.minimum}.`;
+    }
+    if (iss.code === 'too_big') {
+      if (iss.origin === 'string') return `Keep this within ${iss.maximum} characters.`;
+      if (iss.origin === 'array') return `Use at most ${iss.maximum}.`;
+    }
+    return undefined;
+  },
+});
+
 /** URLs that catalog slugs may never take (ARCHITECTURE §4.1). */
 export const RESERVED_SLUGS = [
   'about', 'contact', 'get-a-quote', 'admin', 'api', 'privacy-policy', 'terms-and-conditions', 'shipping-policy',

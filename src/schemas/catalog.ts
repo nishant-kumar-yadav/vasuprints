@@ -56,3 +56,22 @@ export type Product = z.infer<typeof productSchema>;
 export type Feature = z.infer<typeof featureSchema>;
 export type Faq = z.infer<typeof faqSchema>;
 export type ProductImage = z.infer<typeof imageSchema>;
+
+/** Drafts may be incomplete: same shape, without the minimum counts/lengths a published page needs. */
+export const productDraftSchema = productSchema.extend({
+  heading: z.string().trim().max(90),
+  summary: z.string().trim().max(220),
+  intro: z.array(z.string().trim().max(800)).max(4),
+  features: z.array(featureSchema).max(6),
+  specs: z.array(specSchema).max(12),
+  applications: z.array(z.string().trim().min(1).max(80)).max(12),
+  faqs: z.array(faqSchema).max(8),
+  seo: z.object({ title: z.string().trim().max(60), description: z.string().trim().max(170) }),
+});
+
+export const categoryDraftSchema = categorySchema.extend({
+  heading: z.string().trim().max(90),
+  tagline: z.string().trim().max(140),
+  intro: z.array(z.string().trim().max(600)).max(4),
+  seo: z.object({ title: z.string().trim().max(60), description: z.string().trim().max(170) }),
+});

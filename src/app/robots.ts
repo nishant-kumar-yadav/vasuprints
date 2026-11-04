@@ -4,5 +4,5 @@ import { absoluteUrl } from '@/lib/seo';
 export const dynamic = 'force-static';
 
 export default function robots(): MetadataRoute.Robots {
-  return { rules: [{ userAgent: '*', allow: '/', disallow: ['/admin', '/get-a-quote/thank-you'] }], sitemap: absoluteUrl('/sitemap.xml') };
+  return { rules: [{ userAgent: '*', allow: '/', disallow: ['/admin', '/api/', '/get-a-quote/thank-you'] }], sitemap: absoluteUrl('/sitemap.xml') };
 }

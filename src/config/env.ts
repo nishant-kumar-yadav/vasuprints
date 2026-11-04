@@ -63,6 +63,9 @@ export function env(): Env {
   const prod = e.NODE_ENV === 'production' && e.LOCAL_PREVIEW !== 'true';
   need(prod && backend, 'SMTP_HOST', 'SMTP_USER', 'SMTP_PASS', 'MAIL_FROM', 'QUOTE_NOTIFY_TO', 'TURNSTILE_SECRET_KEY', 'NEXT_PUBLIC_TURNSTILE_SITE_KEY');
   need(prod && e.CATALOG_SOURCE === 'mongo', 'ADMIN_EMAIL', 'ADMIN_PASSWORD_HASH', 'SESSION_SECRET');
+  if (e.ADMIN_PASSWORD_HASH && !e.ADMIN_PASSWORD_HASH.startsWith('$argon2id$')) {
+    missing.push('ADMIN_PASSWORD_HASH (not an argon2id hash: in .env files write each $ as \\$, exactly as `pnpm admin:hash` prints it)');
+  }
   if (e.SESSION_SECRET && e.SESSION_SECRET.length < 32) missing.push('SESSION_SECRET (must be at least 32 characters)');
   if (missing.length) throw new Error(`Missing required environment variables: ${missing.join(', ')}`);
   cached = e;

@@ -1,8 +1,8 @@
 import mongoose, { Schema, type Model } from 'mongoose';
 
-export const LEAD_STATUSES = ['new', 'contacted', 'quoted', 'won', 'lost'] as const;
-export type LeadStatus = (typeof LEAD_STATUSES)[number];
-export type EmailStatus = 'pending' | 'sent' | 'failed' | 'skipped';
+import { LEAD_STATUSES, type EmailStatus, type LeadStatus } from '@/schemas/lead';
+
+export { LEAD_STATUSES, type EmailStatus, type LeadStatus };
 
 export interface LeadDoc {
   _id: mongoose.Types.ObjectId;

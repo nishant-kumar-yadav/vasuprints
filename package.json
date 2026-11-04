@@ -9,7 +9,13 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "db:seed": "tsx --env-file-if-exists=.env.local --env-file-if-exists=.env scripts/seed.ts",
+    "admin:hash": "tsx scripts/admin-hash.ts",
+    "uploads:cleanup": "tsx --env-file-if-exists=.env.local --env-file-if-exists=.env scripts/cleanup-uploads.ts",
+    "check:placeholders": "tsx scripts/check-placeholders.ts",
+    "db:dev": "docker compose up -d mongo mailpit",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@node-rs/argon2": "^2.2.2",
@@ -42,5 +48,8 @@
     "tsx": "^4.23.15",
     "typescript": "^6.0.3",
     "vitest": "^5.1.0"
+  },
+  "engines": {
+    "node": ">=22.9"
   }
 }
