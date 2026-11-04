@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react';
 import { AlertCircle, Check, X } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
@@ -17,11 +17,37 @@ import {
 import { ArtworkPicker, type PickedFile } from './ArtworkPicker';
 import { TextArea, TextField, SelectField } from './Field';
 import { HandoffPanel } from './HandoffPanel';
+import { Turnstile } from './Turnstile';
+import { readSource } from '@/lib/client/source';
 
 export interface QuoteCatalog {
   categories: { slug: string; name: string }[];
-  products: { slug: string; name: string; category: string; hints: { size: string; quantity: string; material: string } }[];
+  products: {
+    slug: string;
+    name: string;
+    category: string;
+    hints: { size: string; quantity: string; material: string };
+    image: string | null;
+  }[];
 }
+
+/** Server field names → form field names, for mapping API validation errors. */
+const serverToForm: Record<string, Key> = {
+  name: 'name',
+  company: 'company',
+  phone: 'phone',
+  email: 'email',
+  categorySlug: 'category',
+  productSlug: 'product',
+  size: 'size',
+  quantity: 'quantity',
+  material: 'material',
+  finishing: 'finishing',
+  deliveryCity: 'city',
+  deliveryState: 'state',
+  additional: 'notes',
+  consent: 'consent',
+};
 
 type Errors = Partial<Record<keyof QuoteValues, string>>;
 type Key = keyof QuoteValues;
@@ -58,8 +84,17 @@ const labels: Record<Key, string> = {
   consent: 'Consent',
 };
 
-export function QuoteForm({ catalog, compact = false }: { catalog: QuoteCatalog; compact?: boolean }) {
+export interface QuoteFormProps {
+  catalog: QuoteCatalog;
+  compact?: boolean;
+  /** Submit to /api/quotes (P2). Off → hand-off to WhatsApp/email (P1). */
+  backend?: boolean;
+  turnstileSiteKey?: string | null;
+}
+
+export function QuoteForm({ catalog, compact = false, backend = false, turnstileSiteKey = null }: QuoteFormProps) {
   const params = useSearchParams();
+  const router = useRouter();
   const schema = compact ? compactQuoteSchema : quoteSchema;
   const [values, setValues] = useState<QuoteValues>(emptyQuote);
   const [errors, setErrors] = useState<Errors>({});
@@ -68,6 +103,13 @@ export function QuoteForm({ catalog, compact = false }: { catalog: QuoteCatalog;
   const [files, setFiles] = useState<PickedFile[]>([]);
   const [done, setDone] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
+  /** Set when the API could not take the request: we fall back to the WhatsApp/email hand-off. */
+  const [offline, setOffline] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [turnstileReset, setTurnstileReset] = useState(0);
+  const formToken = useRef<string | null>(null);
+  const website = useRef<HTMLInputElement>(null);
   const summaryRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const restored = useRef(false);
@@ -101,6 +143,17 @@ export function QuoteForm({ catalog, compact = false }: { catalog: QuoteCatalog;
       /* ignore */
     }
   }, [values, compact, done]);
+
+  // Timing token for the bot heuristics (issued when the form is first shown).
+  useEffect(() => {
+    if (!backend) return;
+    fetch('/api/form-token', { cache: 'no-store' })
+      .then((r) => (r.ok ? (r.json() as Promise<{ token: string }>) : null))
+      .then((d) => {
+        if (d) formToken.current = d.token;
+      })
+      .catch(() => undefined);
+  }, [backend]);
 
   const product = catalog.products.find((p) => p.slug === values.product);
   const category = catalog.categories.find((c) => c.slug === values.category);
@@ -156,14 +209,105 @@ export function QuoteForm({ catalog, compact = false }: { catalog: QuoteCatalog;
       });
       return;
     }
-    setSubmitting(true);
     setSummary([]);
     setErrors({});
-    // Brief pause so the button's loading state is perceptible; then show the hand-off.
-    setTimeout(() => {
+    setFormError(null);
+    if (!backend) {
+      setSubmitting(true);
+      // Brief pause so the button's loading state is perceptible; then show the hand-off.
+      setTimeout(() => {
+        setSubmitting(false);
+        setDone(true);
+      }, 350);
+      return;
+    }
+    if (files.some((f) => f.status === 'queued' || f.status === 'uploading')) {
+      setFormError('Please wait for your files to finish uploading.');
+      return;
+    }
+    if (files.some((f) => f.status === 'error')) {
+      setFormError('One of your files did not upload. Retry it or remove it to continue.');
+      return;
+    }
+    if (turnstileSiteKey && !turnstileToken) {
+      setFormError('Verifying you are human… please try again in a moment.');
+      return;
+    }
+    void submitToApi();
+  };
+
+  const submitToApi = async () => {
+    setSubmitting(true);
+    const payload = {
+      kind: compact ? 'message' : 'quote',
+      name: values.name,
+      company: values.company ?? '',
+      phone: values.phone,
+      email: values.email,
+      categorySlug: values.category,
+      productSlug: values.product && values.product !== NOT_SURE ? values.product : null,
+      size: values.size ?? '',
+      quantity: values.quantity,
+      material: values.material ?? '',
+      finishing: values.finishing ?? '',
+      deliveryCity: compact ? '' : values.city,
+      deliveryState: compact ? '' : values.state,
+      additional: values.notes ?? '',
+      uploadIds: files.flatMap((f) => (f.uploadId ? [f.uploadId] : [])),
+      consent: values.consent,
+      turnstileToken: turnstileToken ?? undefined,
+      formToken: formToken.current ?? undefined,
+      website: website.current?.value ?? '',
+      source: readSource(),
+    };
+    let res: Response;
+    try {
+      res = await fetch('/api/quotes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+    } catch {
       setSubmitting(false);
+      setOffline(true);
       setDone(true);
-    }, 350);
+      return;
+    }
+    const body = (await res.json().catch(() => null)) as
+      | { reference?: string; error?: { code: string; message: string; fields?: Record<string, string> } }
+      | null;
+    if (res.status === 201 && body?.reference) {
+      try {
+        sessionStorage.removeItem(DRAFT_KEY);
+      } catch {
+        /* ignore */
+      }
+      router.push(`/get-a-quote/thank-you?ref=${encodeURIComponent(body.reference)}${compact ? '&kind=message' : ''}`);
+      return;
+    }
+    setSubmitting(false);
+    setTurnstileToken(null);
+    setTurnstileReset((n) => n + 1);
+    if (res.status === 400 && body?.error?.fields) {
+      const errs: Errors = {};
+      for (const [k, msg] of Object.entries(body.error.fields)) {
+        const fk = serverToForm[k];
+        if (fk) errs[fk] ??= msg;
+      }
+      const ordered = fieldOrder.filter((k) => errs[k]);
+      if (ordered.length) {
+        setErrors(errs);
+        setSummary(ordered);
+        requestAnimationFrame(() => summaryRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' }));
+        return;
+      }
+    }
+    if (res.status >= 500 || res.status === 404) {
+      setOffline(true);
+      setDone(true);
+      return;
+    }
+    setFormError(body?.error?.message ?? 'Something went wrong. Please try again.');
   };
 
   const field = (key: Key) => ({
@@ -180,7 +324,11 @@ export function QuoteForm({ catalog, compact = false }: { catalog: QuoteCatalog;
         productName={product?.name}
         categoryName={category?.name}
         fileNames={files.map((f) => f.name)}
-        onEdit={() => setDone(false)}
+        notice={offline ? "We couldn't send your request online just now, but it's ready to send on WhatsApp or email." : undefined}
+        onEdit={() => {
+          setDone(false);
+          setOffline(false);
+        }}
         onSent={() => {
           try {
             sessionStorage.removeItem(DRAFT_KEY);
@@ -290,9 +438,30 @@ export function QuoteForm({ catalog, compact = false }: { catalog: QuoteCatalog;
       </div>
     ) : null;
 
+  const formAlert = formError ? (
+    <p role="alert" className="flex items-start gap-2 rounded-lg border border-warning/30 bg-warning/5 p-4 text-[15px] text-navy-900">
+      <AlertCircle className="mt-0.5 size-5 shrink-0 text-warning" aria-hidden />
+      {formError}
+    </p>
+  ) : null;
+
+  // Honeypot: off-screen, unlabeled for humans, skipped by keyboard and assistive tech.
+  const honeypot = backend ? (
+    <div aria-hidden className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden">
+      <label>
+        Website
+        <input ref={website} type="text" name="website" tabIndex={-1} autoComplete="off" defaultValue="" />
+      </label>
+    </div>
+  ) : null;
+
+  const turnstile = backend && turnstileSiteKey ? <Turnstile siteKey={turnstileSiteKey} onToken={setTurnstileToken} resetKey={turnstileReset} /> : null;
+  const uploading = files.some((f) => f.status === 'queued' || f.status === 'uploading');
+
   if (compact) {
     return (
-      <form ref={formRef} onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
+      <form ref={formRef} onSubmit={onSubmit} noValidate className="relative flex flex-col gap-5">
+        {honeypot}
         {errorSummary}
         <TextField {...field('name')} label={labels.name} autoComplete="name" onChange={(e) => set('name', e.target.value)} />
         <div className="grid gap-5 sm:grid-cols-2">
@@ -305,15 +474,18 @@ export function QuoteForm({ catalog, compact = false }: { catalog: QuoteCatalog;
         </div>
         <TextArea {...field('notes')} label="Message" optional placeholder="Tell us about your product, size and material…" onChange={(e) => set('notes', e.target.value)} />
         {consentField}
+        {turnstile}
+        {formAlert}
         <Button type="submit" size="lg" arrow loading={submitting} className="w-full sm:w-auto sm:self-start">
-          {submitting ? 'Preparing…' : 'Send message'}
+          {submitting ? (backend ? 'Sending…' : 'Preparing…') : 'Send message'}
         </Button>
       </form>
     );
   }
 
   return (
-    <form ref={formRef} onSubmit={onSubmit} noValidate className="flex flex-col gap-10">
+    <form ref={formRef} onSubmit={onSubmit} noValidate className="relative flex flex-col gap-10">
+      {honeypot}
       {product ? (
         <div className="flex items-center gap-3 self-start rounded-full border border-border bg-surface py-1.5 pl-1.5 pr-2 text-[15px] text-navy-800">
           <span className="inline-flex size-8 items-center justify-center rounded-full bg-teal-50 text-teal-700">
@@ -347,7 +519,7 @@ export function QuoteForm({ catalog, compact = false }: { catalog: QuoteCatalog;
       </Fieldset>
 
       <Fieldset n={2} legend="Artwork" optional>
-        <ArtworkPicker files={files} onChange={setFiles} />
+        <ArtworkPicker files={files} onChange={setFiles} upload={backend} />
       </Fieldset>
 
       <Fieldset n={3} legend="Your details">
@@ -369,10 +541,15 @@ export function QuoteForm({ catalog, compact = false }: { catalog: QuoteCatalog;
         {consentField}
       </Fieldset>
 
-      <div className="border-t border-border pt-8">
-        <Button type="submit" size="lg" arrow loading={submitting} className="w-full sm:w-auto">
-          {submitting ? 'Sending…' : 'Request a Quote'}
-        </Button>
+      <div className="flex flex-col gap-4 border-t border-border pt-8">
+        {turnstile}
+        {formAlert}
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <Button type="submit" size="lg" arrow loading={submitting} className="w-full sm:w-auto">
+            {submitting ? 'Sending…' : 'Request a Quote'}
+          </Button>
+          {uploading ? <span className="text-sm text-text-muted">Uploads in progress — you can submit once they finish.</span> : null}
+        </div>
       </div>
     </form>
   );

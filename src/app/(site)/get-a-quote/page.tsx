@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { Lock } from 'lucide-react';
 import { ContactActions } from '@/components/quote/ContactActions';
 import { QuoteForm } from '@/components/quote/QuoteForm';
+import { quoteFormConfig } from '@/lib/quote-config';
 import { quoteCatalog } from '@/lib/quote-catalog';
 import { getCatalog } from '@/lib/catalog';
 import { metaFor } from '@/lib/seo';
@@ -29,7 +30,7 @@ export default async function QuotePage() {
             </p>
             <div className="mt-10">
               <Suspense fallback={<div className="h-[1200px]" aria-hidden />}>
-                <QuoteForm catalog={quoteCatalog(catalog)} />
+                <QuoteForm catalog={quoteCatalog(catalog)} {...quoteFormConfig()} />
               </Suspense>
             </div>
           </div>

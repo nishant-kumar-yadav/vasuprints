@@ -33,6 +33,8 @@ const schema = z.object({
   CLOUDINARY_API_KEY: optional,
   CLOUDINARY_API_SECRET: optional,
   TRUST_PROXY: z.enum(['true', 'false']).default('false'),
+  /** Run a production build on localhost without SMTP/Turnstile/admin secrets. Refused for non-local SITE_URL. */
+  LOCAL_PREVIEW: z.enum(['true', 'false']).default('false'),
   LOG_LEVEL: z.enum(['debug', 'info', 'warn', 'error']).default('info'),
 });
 
@@ -56,7 +58,9 @@ export function env(): Env {
   need(backend || e.CATALOG_SOURCE === 'mongo', 'MONGODB_URI');
   need(backend, 'IP_HASH_SALT');
   // In production there are no fallbacks for mail, bot protection or admin secrets.
-  const prod = e.NODE_ENV === 'production';
+  const local = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(e.SITE_URL.replace(/\/$/, ''));
+  if (e.LOCAL_PREVIEW === 'true' && !local) missing.push('LOCAL_PREVIEW is only allowed when SITE_URL is localhost');
+  const prod = e.NODE_ENV === 'production' && e.LOCAL_PREVIEW !== 'true';
   need(prod && backend, 'SMTP_HOST', 'SMTP_USER', 'SMTP_PASS', 'MAIL_FROM', 'QUOTE_NOTIFY_TO', 'TURNSTILE_SECRET_KEY', 'NEXT_PUBLIC_TURNSTILE_SITE_KEY');
   need(prod && e.CATALOG_SOURCE === 'mongo', 'ADMIN_EMAIL', 'ADMIN_PASSWORD_HASH', 'SESSION_SECRET');
   if (e.SESSION_SECRET && e.SESSION_SECRET.length < 32) missing.push('SESSION_SECRET (must be at least 32 characters)');

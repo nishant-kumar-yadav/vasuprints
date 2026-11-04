@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-import { Check, Copy, Mail, Paperclip, Pencil } from 'lucide-react';
+import { AlertCircle, Check, Copy, Mail, Paperclip, Pencil } from 'lucide-react';
 import { Button, LinkButton } from '@/components/ui/Button';
 import { WhatsAppIcon } from '@/components/site/icons/WhatsApp';
 import { buildQuoteMessage, quoteSubject, type QuoteValues } from '@/lib/quote';
@@ -16,6 +16,7 @@ export function HandoffPanel({
   fileNames,
   onEdit,
   onSent,
+  notice,
 }: {
   values: QuoteValues;
   productName?: string;
@@ -23,6 +24,8 @@ export function HandoffPanel({
   fileNames: string[];
   onEdit: () => void;
   onSent: () => void;
+  /** Shown when the online submission failed and this is the fallback. */
+  notice?: string;
 }) {
   const heading = useRef<HTMLHeadingElement>(null);
   const [copied, setCopied] = useState(false);
@@ -64,6 +67,13 @@ export function HandoffPanel({
           </p>
         </div>
       </div>
+
+      {notice ? (
+        <p role="status" className="flex items-start gap-2.5 rounded-lg border border-warning/30 bg-warning/5 p-4 text-[15px] text-navy-900">
+          <AlertCircle className="mt-0.5 size-5 shrink-0 text-warning" aria-hidden />
+          {notice}
+        </p>
+      ) : null}
 
       <div className="flex flex-col gap-3 sm:flex-row">
         <LinkButton href={buildWhatsAppUrl(message)} size="lg" arrow icon={<WhatsAppIcon className="fill-navy-900" />} onClick={markSent}>

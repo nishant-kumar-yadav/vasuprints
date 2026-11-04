@@ -4,6 +4,7 @@ import { Footer } from '@/components/site/Footer';
 import { FloatingWhatsApp } from '@/components/site/FloatingWhatsApp';
 import { Header } from '@/components/site/Header';
 import { RevealObserver } from '@/components/site/Reveal';
+import { SourceCapture } from '@/components/site/SourceCapture';
 import { getCatalog } from '@/lib/catalog';
 import { navTree } from '@/lib/nav';
 import { JsonLd, organizationLd } from '@/lib/seo';
@@ -31,6 +32,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
       <Footer categories={catalog.categories} />
       <FloatingWhatsApp href={wa} />
       <RevealObserver />
+      <SourceCapture />
     </>
   );
 }

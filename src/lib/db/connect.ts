@@ -32,3 +32,9 @@ export async function dbHealthy(): Promise<boolean> {
     return false;
   }
 }
+
+/**
+ * `sanitizeFilter` neutralises `$` operators in filters so request data can never inject a
+ * query operator. Filters we build ourselves from validated values opt back in with this.
+ */
+export const trusted = <T extends object>(filter: T): T => mongoose.trusted(filter) as T;

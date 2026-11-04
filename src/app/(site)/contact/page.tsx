@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Suspense } from 'react';
 import { ArrowRight, Clock, Mail, MapPin, Phone } from 'lucide-react';
 import { QuoteForm } from '@/components/quote/QuoteForm';
+import { quoteFormConfig } from '@/lib/quote-config';
 import { WhatsAppIcon } from '@/components/site/icons/WhatsApp';
 import { MapEmbed } from '@/components/site/MapEmbed';
 import { business, formatAddress, isSet, show } from '@/config/business';
@@ -84,7 +85,7 @@ export default async function ContactPage() {
             </p>
             <div className="mt-8">
               <Suspense fallback={<div className="h-[640px]" aria-hidden />}>
-                <QuoteForm catalog={quoteCatalog(catalog)} compact />
+                <QuoteForm catalog={quoteCatalog(catalog)} {...quoteFormConfig()} compact />
               </Suspense>
             </div>
           </div>

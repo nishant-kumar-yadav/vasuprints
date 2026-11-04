@@ -16,19 +16,20 @@ const next = [
   'Production and dispatch',
 ];
 
-export default async function ThankYouPage({ searchParams }: { searchParams: Promise<{ ref?: string | string[] }> }) {
+export default async function ThankYouPage({ searchParams }: { searchParams: Promise<{ ref?: string | string[]; kind?: string | string[] }> }) {
   const sp = await searchParams;
   const raw = Array.isArray(sp.ref) ? sp.ref[0] : sp.ref;
   const ref = raw && /^VP-\d{4}-\d{6}$/.test(raw) ? raw : null;
+  const isMessage = (Array.isArray(sp.kind) ? sp.kind[0] : sp.kind) === 'message';
   const { categories } = await getCatalog();
-  const wa = buildWhatsAppUrl(ref ? `Hi VasuPrint, I've sent a quote request (${ref}).` : whatsappTexts.global);
+  const wa = buildWhatsAppUrl(ref ? `Hi VasuPrint, I've sent ${isMessage ? 'a message' : 'a quote request'} (${ref}).` : whatsappTexts.global);
   return (
     <section className="section-y">
       <div className="container-narrow text-center">
         <span className="mx-auto inline-flex size-16 items-center justify-center rounded-full bg-teal-50 text-teal-500">
           <Check className="size-8" strokeWidth={2.5} aria-hidden />
         </span>
-        <h1 className="text-h1 mt-6 text-navy-900">Thank you — we&apos;ve received your request</h1>
+        <h1 className="text-h1 mt-6 text-navy-900">{isMessage ? 'Thank you — we\u2019ve received your message' : 'Thank you — we\u2019ve received your request'}</h1>
         {ref ? (
           <div className="mt-6 inline-flex items-center gap-3 rounded-full border border-border bg-surface py-1.5 pl-5 pr-1.5">
             <span className="text-sm text-text-muted">Your reference</span>
@@ -37,7 +38,8 @@ export default async function ThankYouPage({ searchParams }: { searchParams: Pro
           </div>
         ) : null}
         <p className="text-lead mx-auto mt-5 max-w-[52ch] text-text-secondary">
-          Our team will review your specifications and get back to you on WhatsApp or email, usually within one business day.
+          {ref ? 'We\u2019ve emailed you a copy. ' : ''}Our team will review your {isMessage ? 'message' : 'specifications'} and get back to you on WhatsApp or email, usually
+          within one business day.
         </p>
 
         <ol className="mx-auto mt-10 grid max-w-xl gap-3 text-left sm:grid-cols-2">
