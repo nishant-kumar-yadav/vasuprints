@@ -85,12 +85,24 @@ export async function dashboardStats() {
   const now = Date.now();
   const weekAgo = new Date(now - 7 * 864e5);
   const monthAgo = new Date(now - 30 * 864e5);
-  const [counts, week, month, latest] = await Promise.all([
+  const endOfTodayIst = new Date(`${new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata' }).format(new Date(now))}T23:59:59.999+05:30`);
+  const [counts, week, month, latest, followUps] = await Promise.all([
     leadCounts(),
     LeadModel.countDocuments({ createdAt: trusted({ $gte: weekAgo }) }),
     LeadModel.countDocuments({ createdAt: trusted({ $gte: monthAgo }) }),
     LeadModel.find().sort({ createdAt: -1 }).limit(10).lean(),
+    LeadModel.find({ followUpAt: trusted({ $ne: null, $lte: endOfTodayIst }), status: trusted({ $nin: ['won' as const, 'lost' as const] }) })
+      .sort({ followUpAt: 1 })
+      .limit(10)
+      .lean(),
   ]);
   const decided = counts.won + counts.lost;
-  return { counts, week, month, latest, winRate: decided ? Math.round((counts.won / decided) * 100) : null };
+  const startOfTodayIst = new Date(endOfTodayIst.getTime() - 864e5 + 1);
+  return {
+    counts,
+    week,
+    month,
+    latest,
+    followUps: followUps.map((l) => ({ ...l, overdue: new Date(l.followUpAt!).getTime() < startOfTodayIst.getTime() })),
+    winRate: decided ? Math.round((counts.won / decided) * 100) : null };
 }

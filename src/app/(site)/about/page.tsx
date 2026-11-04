@@ -1,5 +1,6 @@
 import { Eye, Target } from 'lucide-react';
-import { Art } from '@/components/site/art/Art';
+import { Media } from '@/components/site/Media';
+import { imagesManifest } from '@/content/images-manifest';
 import { CategoryMiniCard, FeatureCard } from '@/components/site/Cards';
 import { CtaBand } from '@/components/site/CtaBand';
 import { CropMarks } from '@/components/site/motifs/Motifs';
@@ -26,7 +27,7 @@ export default async function AboutPage() {
           </div>
           <div className="relative lg:col-span-6">
             <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-surface-2 ring-1 ring-border">
-              <Art k="hero" view={2} label="Printed packaging, labels, transfers and tags made by VasuPrint" />
+              <Media image={imagesManifest.pages.about ? { ...imagesManifest.pages.about, alt: 'Print finishing workspace at VasuPrint' } : null} k="hero" view={2} label="Printed packaging, labels, transfers and tags made by VasuPrint" sizes="(min-width: 1024px) 50vw, 100vw" />
             </div>
             <CropMarks inset={-14} size={24} />
           </div>

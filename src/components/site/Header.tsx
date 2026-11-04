@@ -9,6 +9,7 @@ import { cn } from '@/lib/cn';
 import type { NavCategory } from '@/lib/nav';
 import { Logo } from './Logo';
 import { MobileMenu } from './MobileMenu';
+import { ProductSearch } from './ProductSearch';
 import { Art } from './art/Art';
 
 interface HeaderProps {
@@ -121,6 +122,7 @@ export function Header({ nav, phone, whatsappHref, promo }: HeaderProps) {
         </nav>
 
         <div className="hidden items-center gap-5 lg:flex">
+          <ProductSearch nav={nav} />
           {phone ? (
             <a href={phone.href} className="inline-flex items-center gap-2 text-sm font-medium text-navy-800 hover:text-teal-700">
               <Phone className="size-4 text-teal-700" aria-hidden />
@@ -135,7 +137,8 @@ export function Header({ nav, phone, whatsappHref, promo }: HeaderProps) {
         </div>
 
         {/* Mobile controls */}
-        <div className="flex items-center gap-2 lg:hidden">
+        <div className="flex items-center gap-1 lg:hidden">
+          <ProductSearch nav={nav} compact />
           {pathname !== '/get-a-quote' ? (
             <LinkButton href="/get-a-quote" size="sm">
               Get a Quote

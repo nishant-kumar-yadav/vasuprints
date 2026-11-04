@@ -20,7 +20,7 @@ describe('admin authorisation', () => {
         count++;
       }
     }
-    expect(count).toBe(11); // update when adding actions
+    expect(count).toBe(12); // update when adding actions
   });
 
   it('admin route handlers return 401 without a cookie', async () => {

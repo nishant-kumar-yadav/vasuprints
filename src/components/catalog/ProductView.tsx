@@ -6,6 +6,7 @@ import { CtaBand } from '@/components/site/CtaBand';
 import { DynamicIcon } from '@/components/site/DynamicIcon';
 import { Faq } from '@/components/site/Faq';
 import { WhatsAppIcon } from '@/components/site/icons/WhatsApp';
+import { ShareButton } from '@/components/site/ShareButton';
 import { MobileActionBar } from '@/components/site/MobileActionBar';
 import { ProcessSteps } from '@/components/site/ProcessSteps';
 import { RichText } from '@/components/site/RichText';
@@ -86,6 +87,7 @@ export function ProductView({ product: p, catalog }: { product: Product; catalog
                     </LinkButton>
                   ) : null}
                 </div>
+                <ShareButton title={`${p.name} | VasuPrint`} url={absoluteUrl(`/${p.slug}`)} />
               </div>
               <div className="mt-8 rounded-lg border border-border bg-surface px-5 py-2">
                 <p className="text-eyebrow pb-1 pt-3 text-text-secondary">Quick specs</p>

@@ -61,6 +61,7 @@ production build on localhost without them, set `LOCAL_PREVIEW=true` (rejected f
 | `pnpm db:seed [--force]` | Import the content files into MongoDB (`--force` overwrites edited documents) |
 | `pnpm admin:hash` | Generate `ADMIN_PASSWORD_HASH` |
 | `pnpm uploads:cleanup` | Delete artwork uploads never attached to a quote (> 24 h). Run hourly from cron in production |
+| `pnpm images [folder]` | Import generated photos and rebuild the image manifest (see Photos) |
 | `pnpm check:placeholders` | Lists business details still missing; exits 1 if any (use before launch) |
 
 ## Feature flags
@@ -91,9 +92,26 @@ Static pages read these at build time, so rebuild after changing them.
 
 ## Photos
 
-Upload product photos in the admin (Products → a product → Images). The first photo becomes the cover;
-without photos each page shows its brand illustration. With `CLOUDINARY_*` set, photos go to Cloudinary;
-otherwise they are stored in `MEDIA_DIR` and served from `/media/...`.
+There are two ways photos get onto the site, and they can be mixed:
+
+1. **Launch photos in the repo.** Generate them with `docs/PHOTO-PROMPTS.md`, put them in a folder laid out as that file
+   describes, and run `pnpm images <folder>`. The script crops to 4:3, resizes, converts to WebP into `public/images/`
+   and regenerates `src/content/images-manifest.ts`. Rebuild afterwards. With `CATALOG_SOURCE=mongo`, run
+   `pnpm db:seed` once more: it copies photos into products that have none, without touching other edits.
+2. **Admin uploads** (Products → a product → Images). The first photo becomes the cover. With `CLOUDINARY_*` set,
+   uploads go to Cloudinary; otherwise they are stored in `MEDIA_DIR` and served from `/media/...`.
+
+Without any photo, each page shows its brand illustration.
+
+### Where images live in production
+
+| Kind | Where | Why |
+|---|---|---|
+| Launch photos (`pnpm images`) | `public/images/` in the repo, served by the app | Versioned with the code, optimized by `next/image` |
+| Admin-uploaded product photos | **Cloudinary (recommended)**, or `MEDIA_DIR` on the server | Cloudinary's free tier (25 credits/month) is far beyond this site's needs, serves from a CDN and survives a server rebuild. `MEDIA_DIR` works too but must be on a persistent volume and in the backups |
+| Customer artwork from quote forms | `UPLOAD_DIR` on the server only, never public | Private files up to 100 MB, downloaded only by the admin. Include the folder in the nightly off-site backup |
+
+Social share cards are generated at build time from photo 1, so they need no storage.
 
 ## Security notes
 

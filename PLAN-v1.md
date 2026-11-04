@@ -71,6 +71,17 @@ Everything from the original P2/P3 scope except deployment, built on the v1 fron
 - GA4 + Search Console after the domain is live.
 - Product photography (upload through the admin when ready).
 
+## Finishing pass (built)
+
+- **Product search** in the header (Ctrl/⌘ K or "/"): matches names, uses, materials and finishes, with synonyms ("labels for bottles" finds vinyl labels).
+- **Photo pipeline:** `pnpm images` plus `docs/PHOTO-PROMPTS.md` (59 prompts with filenames). Photos flow into cards, galleries, the home hero, About and share cards; illustrations remain the fallback.
+- **Branded share cards** (Open Graph) for every page, category and product, generated at build time.
+- **Share button** on product pages (native share on phones, copy link on desktop).
+- **Analytics:** GA4 only when `NEXT_PUBLIC_GA_ID` is set; quote submissions are tracked as `generate_lead`.
+- **Admin:** follow-up dates on leads with quick picks and a "Follow-ups due" dashboard card that flags overdue ones; one-tap WhatsApp reply templates (acknowledge, ask for artwork, quotation sent, proof ready, dispatched).
+- **Home:** the capabilities intro stays in view while the lists scroll, with an "Ask us" button.
+- **Image storage decision:** launch photos in the repo, admin uploads on Cloudinary (free tier), customer artwork stays private on the server disk with off-site backups.
+
 ## Needed from the owner
 
 Kept current in `NEEDED-FROM-OWNER.md` next to this file.

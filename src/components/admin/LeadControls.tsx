@@ -2,8 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';
-import { CheckCircle2, Clock, Mail, RefreshCw, Trash2, XCircle } from 'lucide-react';
-import { addLeadNote, deleteLead, resendLeadEmail, updateLeadStatus } from '@/app/admin/(panel)/leads/actions';
+import { BellRing, CheckCircle2, ChevronDown, Clock, Mail, RefreshCw, Trash2, XCircle } from 'lucide-react';
+import { addLeadNote, deleteLead, resendLeadEmail, setFollowUp, updateLeadStatus } from '@/app/admin/(panel)/leads/actions';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/cn';
 import { LEAD_STATUSES, type EmailStatus, type LeadStatus } from '@/schemas/lead';
@@ -189,5 +189,99 @@ export function DeleteLead({ reference }: { reference: string }) {
         }
       />
     </>
+  );
+}
+
+function daysFromToday(days: number) {
+  return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata' }).format(new Date(Date.now() + days * 864e5));
+}
+
+export function FollowUp({ reference, date }: { reference: string; date: string | null }) {
+  const [value, setValue] = useState(date ?? '');
+  const [pending, start] = useTransition();
+  const toast = useToast();
+  const save = (next: string | null) =>
+    start(async () => {
+      const r = await setFollowUp({ reference, date: next });
+      if (r.ok) {
+        setValue(next ?? '');
+        toast(next ? 'Reminder set' : 'Reminder cleared');
+      } else toast(r.error, 'error');
+    });
+  return (
+    <div className="flex flex-col gap-1.5">
+      <label htmlFor="follow-up" className="flex items-center gap-1.5 text-sm font-medium text-navy-900">
+        <BellRing className="size-4 text-teal-700" aria-hidden /> Follow up on
+      </label>
+      <div className="flex gap-2">
+        <input
+          id="follow-up"
+          type="date"
+          value={value}
+          disabled={pending}
+          onChange={(e) => save(e.target.value || null)}
+          className="h-11 min-w-0 flex-1 rounded-md border border-border bg-white px-3 text-[15px] focus:border-teal-500 focus:outline-none focus:ring-[3px] focus:ring-teal-100"
+        />
+        {value ? (
+          <Button type="button" size="sm" variant="ghost" onClick={() => save(null)} disabled={pending} className="h-11">
+            Clear
+          </Button>
+        ) : null}
+      </div>
+      {!value ? (
+        <div className="flex flex-wrap gap-1.5">
+          {[
+            ['Tomorrow', 1],
+            ['In 3 days', 3],
+            ['Next week', 7],
+          ].map(([l, d]) => (
+            <button
+              key={l}
+              type="button"
+              disabled={pending}
+              onClick={() => save(daysFromToday(d as number))}
+              className="rounded-full border border-border px-2.5 py-1 text-xs font-medium text-text-secondary hover:border-teal-500 hover:text-navy-900"
+            >
+              {l}
+            </button>
+          ))}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+/** Ready-made WhatsApp replies; each opens WhatsApp with the text filled in for this customer. */
+export function WhatsAppTemplates({ phone, firstName, reference, product }: { phone: string; firstName: string; reference: string; product: string }) {
+  const digits = phone.replace(/\D/g, '');
+  const templates = [
+    ['Acknowledge', `Hello ${firstName}, this is VasuPrint. Thank you for your enquiry ${reference} for ${product}. We're reviewing your requirements and will share a quotation shortly.`],
+    ['Ask for artwork', `Hello ${firstName}, for your request ${reference} could you please share your artwork (CDR, AI, PDF or high-resolution PNG) and the final size? We'll prepare a proof for approval.`],
+    ['Send quotation', `Hello ${firstName}, please find the quotation for ${reference} (${product}) attached. Let us know if you'd like to change the quantity, material or finish.`],
+    ['Proof ready', `Hello ${firstName}, the artwork proof for ${reference} is ready. Please review and reply "Approved" or share any changes.`],
+    ['Dispatched', `Hello ${firstName}, your order ${reference} has been dispatched. We'll share the tracking details shortly. Thank you for choosing VasuPrint!`],
+  ] as const;
+  return (
+    <details className="group rounded-lg border border-border">
+      <summary className="flex h-11 cursor-pointer list-none items-center justify-between px-3 text-[15px] font-medium text-navy-900 [&::-webkit-details-marker]:hidden">
+        WhatsApp message templates
+        <ChevronDown className="size-4 text-navy-400 transition-transform group-open:rotate-180" aria-hidden />
+      </summary>
+      <ul className="flex flex-col border-t border-border p-1.5">
+        {templates.map(([label, text]) => (
+          <li key={label}>
+            <a
+              href={`https://wa.me/${digits}?text=${encodeURIComponent(text)}`}
+              target="_blank"
+              rel="noreferrer"
+              className="block rounded-md px-2.5 py-2 hover:bg-surface"
+            >
+              <span className="block text-sm font-semibold text-navy-900">{label}</span>
+              <span className="line-clamp-2 text-xs text-text-secondary">{text}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </details>
   );
 }

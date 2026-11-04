@@ -19,6 +19,7 @@ import { TextArea, TextField, SelectField } from './Field';
 import { HandoffPanel } from './HandoffPanel';
 import { Turnstile } from './Turnstile';
 import { readSource } from '@/lib/client/source';
+import { track } from '@/lib/client/track';
 
 export interface QuoteCatalog {
   categories: { slug: string; name: string }[];
@@ -282,6 +283,7 @@ export function QuoteForm({ catalog, compact = false, backend = false, turnstile
       } catch {
         /* ignore */
       }
+      track('generate_lead', { form: compact ? 'contact' : 'quote', category: values.category });
       router.push(`/get-a-quote/thank-you?ref=${encodeURIComponent(body.reference)}${compact ? '&kind=message' : ''}`);
       return;
     }

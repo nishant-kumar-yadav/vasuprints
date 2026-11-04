@@ -23,6 +23,7 @@ const schema = z.object({
   MAIL_FROM: optional,
   QUOTE_NOTIFY_TO: optional,
   NEXT_PUBLIC_TURNSTILE_SITE_KEY: optional,
+  NEXT_PUBLIC_GA_ID: optional,
   TURNSTILE_SECRET_KEY: optional,
   IP_HASH_SALT: optional,
   ADMIN_EMAIL: optional,

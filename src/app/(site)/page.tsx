@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { LinkButton } from '@/components/ui/Button';
-import { Art } from '@/components/site/art/Art';
+import { Media } from '@/components/site/Media';
+import { imagesManifest } from '@/content/images-manifest';
 import { CategoryBento } from '@/components/site/CategoryBento';
 import { CtaBand } from '@/components/site/CtaBand';
 import { FeatureCard, ProductCard } from '@/components/site/Cards';
@@ -59,7 +60,7 @@ export default async function HomePage() {
           <div className="lg:col-span-6">
             <div className="relative">
               <div className="relative aspect-[16/11] overflow-hidden rounded-xl bg-surface-2 shadow-sm ring-1 ring-border lg:aspect-[4/3]">
-                <Art k="hero" label={hero.imageAlt} />
+                <Media image={imagesManifest.hero ? { ...imagesManifest.hero, alt: hero.imageAlt } : null} k="hero" label={hero.imageAlt} priority sizes="(min-width: 1024px) 50vw, 100vw" />
               </div>
               <CropMarks inset={-14} size={24} className="text-teal-500" />
             </div>
@@ -141,7 +142,12 @@ export default async function HomePage() {
       <Section tone="surface" labelledBy="cap-title">
         <div className="container-site grid gap-10 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-5">
-            <SectionHeader id="cap-title" eyebrow={capabilities.eyebrow} title={capabilities.title} lead={capabilities.text} />
+            <div className="lg:sticky lg:top-28">
+              <SectionHeader id="cap-title" eyebrow={capabilities.eyebrow} title={capabilities.title} lead={capabilities.text} />
+              <LinkButton href="/get-a-quote" variant="secondary" arrow className="mt-8 hidden lg:inline-flex">
+                Not sure what to choose? Ask us
+              </LinkButton>
+            </div>
           </div>
           <div className="flex flex-col gap-8 lg:col-span-6 lg:col-start-7" data-reveal>
             {capabilities.groups.map((g) => (

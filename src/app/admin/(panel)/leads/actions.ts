@@ -68,3 +68,15 @@ export const deleteLead = adminAction(z.object({ reference, confirm: z.string() 
   revalidatePath('/admin', 'layout');
   return { reference };
 });
+
+export const setFollowUp = adminAction(
+  z.object({ reference, date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Pick a date.').nullable() }),
+  async ({ reference, date }) => {
+    await connectDb();
+    const followUpAt = date ? new Date(`${date}T00:00:00+05:30`) : null;
+    const r = await LeadModel.updateOne({ reference }, { $set: { followUpAt } });
+    if (!r.matchedCount) throw new ActionError('Lead not found.');
+    touch(reference);
+    return { date };
+  },
+);

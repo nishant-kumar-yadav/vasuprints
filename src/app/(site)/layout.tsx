@@ -5,6 +5,7 @@ import { FloatingWhatsApp } from '@/components/site/FloatingWhatsApp';
 import { Header } from '@/components/site/Header';
 import { RevealObserver } from '@/components/site/Reveal';
 import { SourceCapture } from '@/components/site/SourceCapture';
+import { Analytics } from '@/components/site/Analytics';
 import { getCatalog } from '@/lib/catalog';
 import { navTree } from '@/lib/nav';
 import { JsonLd, organizationLd } from '@/lib/seo';
@@ -33,6 +34,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
       <FloatingWhatsApp href={wa} />
       <RevealObserver />
       <SourceCapture />
+      <Analytics />
     </>
   );
 }

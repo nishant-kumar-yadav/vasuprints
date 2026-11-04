@@ -15,7 +15,8 @@
     "uploads:cleanup": "tsx --env-file-if-exists=.env.local --env-file-if-exists=.env scripts/cleanup-uploads.ts",
     "check:placeholders": "tsx scripts/check-placeholders.ts",
     "db:dev": "docker compose up -d mongo mailpit",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "images": "tsx scripts/images.ts"
   },
   "dependencies": {
     "@node-rs/argon2": "^2.2.2",
@@ -44,6 +45,7 @@
     "eslint": "^10.14.0",
     "eslint-config-next": "^16.4.5",
     "mongodb-memory-server": "^11.3.0",
+    "sharp": "^0.35.5",
     "tailwindcss": "^4.3.4",
     "tsx": "^4.23.15",
     "typescript": "^6.0.3",

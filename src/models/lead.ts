@@ -31,6 +31,8 @@ export interface LeadDoc {
     customer: { status: EmailStatus; at?: Date; error?: string };
   };
   notes: { body: string; at: Date }[];
+  /** Optional reminder date for the next follow-up (IST day, stored at 00:00 IST). */
+  followUpAt: Date | null;
   statusHistory: { from: LeadStatus; to: LeadStatus; at: Date }[];
   meta: { ipHash: string; userAgent: string };
   createdAt: Date;
@@ -62,6 +64,7 @@ const leadSchema = new Schema<LeadDoc>(
     source: { landingPage: String, submitPage: String, utmSource: String, utmMedium: String, utmCampaign: String },
     consent: { accepted: Boolean, noticeVersion: String, at: Date },
     email: { admin: delivery, customer: delivery },
+    followUpAt: { type: Date, default: null },
     notes: [new Schema({ body: String, at: Date }, { _id: false, strict: 'throw' })],
     statusHistory: [new Schema({ from: String, to: String, at: Date }, { _id: false, strict: 'throw' })],
     meta: { ipHash: String, userAgent: String },
@@ -70,6 +73,7 @@ const leadSchema = new Schema<LeadDoc>(
 );
 leadSchema.index({ status: 1, createdAt: -1 });
 leadSchema.index({ createdAt: -1 });
+leadSchema.index({ followUpAt: 1, status: 1 });
 leadSchema.index({ 'customer.phone': 1 });
 leadSchema.index({ reference: 'text', 'customer.name': 'text', 'customer.company': 'text', 'customer.email': 'text' });
 
