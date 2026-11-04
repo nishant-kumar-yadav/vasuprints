@@ -85,7 +85,7 @@ export function Sidebar({ newLeads, logout }: { newLeads: number; logout: () => 
 
   return (
     <>
-      <aside className="fixed inset-y-0 left-0 z-30 hidden w-[248px] flex-col bg-navy-900 lg:flex">
+      <aside aria-label="Admin navigation" className="fixed inset-y-0 left-0 z-30 hidden w-[248px] flex-col bg-navy-900 lg:flex">
         <div className="flex h-16 items-center px-5">
           <Brand />
         </div>

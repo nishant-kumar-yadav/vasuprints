@@ -167,7 +167,7 @@ export function CategoryEditor({ id, initial, status: initialStatus, productCoun
           </Section>
         </div>
 
-        <aside className="xl:sticky xl:top-8 xl:self-start">
+        <aside aria-label="Publishing" className="xl:sticky xl:top-8 xl:self-start">
           <div className="flex flex-col gap-3 rounded-xl border border-border bg-white p-5">
             {status === 'draft' ? (
               <>

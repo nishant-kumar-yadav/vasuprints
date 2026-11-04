@@ -41,7 +41,7 @@ const statusTone: Record<LeadStatus, string> = {
   new: 'bg-teal-50 text-teal-800 ring-teal-200',
   contacted: 'bg-navy-50 text-navy-700 ring-navy-200',
   quoted: 'bg-[#fff7e6] text-warning ring-[#f5d9a6]',
-  won: 'bg-[#e8f6ec] text-success ring-[#b9e2c5]',
+  won: 'bg-[#e8f6ec] text-[#166534] ring-[#b9e2c5]',
   lost: 'bg-surface-2 text-text-muted ring-border',
 };
 
@@ -55,7 +55,7 @@ export function StatusBadge({ status }: { status: LeadStatus }) {
 
 export function PublishBadge({ status }: { status: 'draft' | 'published' }) {
   return status === 'published' ? (
-    <span className="inline-flex items-center gap-1.5 rounded-full bg-[#e8f6ec] px-2.5 py-0.5 text-xs font-semibold text-success ring-1 ring-inset ring-[#b9e2c5]">
+    <span className="inline-flex items-center gap-1.5 rounded-full bg-[#e8f6ec] px-2.5 py-0.5 text-xs font-semibold text-[#166534] ring-1 ring-inset ring-[#b9e2c5]">
       <span className="size-1.5 rounded-full bg-success" aria-hidden />
       Published
     </span>

@@ -286,7 +286,7 @@ export function ProductEditor({
           </Section>
         </div>
 
-        <aside className="xl:sticky xl:top-8 xl:self-start">
+        <aside aria-label="Publishing" className="xl:sticky xl:top-8 xl:self-start">
           <div className="flex flex-col gap-4 rounded-xl border border-border bg-white p-5">
             <div className="flex items-center justify-between">
               <span className="text-sm font-medium text-text-secondary">Status</span>

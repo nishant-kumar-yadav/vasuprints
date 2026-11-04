@@ -130,7 +130,7 @@ export default async function LeadPage({ params }: { params: Params }) {
           ) : null}
         </div>
 
-        <div className="flex flex-col gap-6 lg:sticky lg:top-8 lg:self-start">
+        <div className="order-first flex flex-col gap-6 lg:order-none lg:sticky lg:top-8 lg:self-start">
           <Card>
             <p className="font-display text-lg font-bold text-navy-900">{c.name}</p>
             {c.company ? <p className="text-[15px] text-text-secondary">{c.company}</p> : null}

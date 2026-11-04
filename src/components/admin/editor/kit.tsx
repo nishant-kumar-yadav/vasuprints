@@ -74,7 +74,7 @@ export function Field({
       </div>
       <div className="relative flex">
         {prefix ? (
-          <span className="inline-flex items-center rounded-l-md border border-r-0 border-border bg-surface px-3 text-sm text-text-muted">{prefix}</span>
+          <span className="inline-flex items-center rounded-l-md border border-r-0 border-border bg-surface px-3 text-sm text-text-secondary">{prefix}</span>
         ) : null}
         {multiline ? (
           <textarea

@@ -75,7 +75,7 @@ export default async function LeadsPage({ searchParams }: { searchParams: SP }) 
             {/* Desktop table */}
             <div className="hidden overflow-x-auto md:block">
               <table className="w-full text-left text-[15px]">
-                <thead className="border-b border-border bg-surface text-xs font-semibold uppercase tracking-[0.08em] text-text-muted">
+                <thead className="border-b border-border bg-surface text-xs font-semibold uppercase tracking-[0.08em] text-text-secondary">
                   <tr>
                     <th className="px-5 py-3 font-semibold">Reference</th>
                     <th className="px-3 py-3 font-semibold">Customer</th>
