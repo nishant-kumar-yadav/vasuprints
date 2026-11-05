@@ -143,7 +143,7 @@ export function Footer({ categories }: { categories: { slug: string; name: strin
               </li>
             ))}
           </ul>
-          <p className="tabular-nums">GSTIN: {show(business.gstin)}</p>
+          {isSet(business.gstin) && <p className="tabular-nums">GSTIN: {business.gstin}</p>}
         </div>
       </div>
     </footer>

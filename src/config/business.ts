@@ -8,25 +8,26 @@ export const PLACEHOLDER = '__PLACEHOLDER__' as const;
 export const business = {
   brandName: 'VasuPrint',
   siteUrl: 'https://vasuprint.com',
-  legalName: PLACEHOLDER as string,
-  ownerNames: [PLACEHOLDER] as string[],
-  phoneDisplay: PLACEHOLDER as string, // "+91 98765 43210"
-  phoneE164: PLACEHOLDER as string, // "+919876543210"
-  whatsappE164: PLACEHOLDER as string, // digits only for wa.me, e.g. "919876543210"
-  email: PLACEHOLDER as string,
+  legalName: 'Vasuprint' as string,
+  ownerNames: [] as string[], // intentionally not shown on the site
+  phoneDisplay: '+91 96258 84463' as string,
+  phoneE164: '+919625884463' as string,
+  whatsappE164: '919625884463' as string, // digits only for wa.me
+  email: 'support@vasuprint.com' as string,
   address: {
-    line1: PLACEHOLDER as string,
-    line2: '',
-    city: PLACEHOLDER as string,
-    state: PLACEHOLDER as string,
-    pin: PLACEHOLDER as string,
+    line1: '104, G7 Shyam Park, Nawada' as string,
+    line2: 'Uttam Nagar (near Nawada Metro Gate No. 2)',
+    city: 'New Delhi' as string,
+    state: 'Delhi' as string,
+    pin: '110059' as string,
     country: 'India',
   },
   mapsUrl: PLACEHOLDER as string,
   mapsEmbedUrl: PLACEHOLDER as string,
-  gstin: PLACEHOLDER as string,
+  /** Empty while GST registration is under verification; nothing GST-related is shown until set. */
+  gstin: '' as string,
   businessHours: PLACEHOLDER as string, // "Mon–Sat, 10:00–19:00 IST"
-  jurisdictionCity: PLACEHOLDER as string,
+  jurisdictionCity: 'Delhi' as string,
   /** Year the business started, e.g. "2015" (shown in structured data). */
   foundingYear: PLACEHOLDER as string,
   /** Map pin for local search, e.g. { lat: 28.6139, lng: 77.209 }. */

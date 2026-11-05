@@ -10,8 +10,206 @@ export const imagesManifest: {
   categories: Record<string, ManifestImage>;
   products: Record<string, ManifestImage[]>;
 } = {
-  "hero": null,
-  "pages": {},
-  "categories": {},
-  "products": {}
+  "hero": {
+    "src": "/images/hero/home.webp",
+    "width": 2000,
+    "height": 1500
+  },
+  "pages": {
+    "about": {
+      "src": "/images/pages/about.webp",
+      "width": 1600,
+      "height": 1200
+    }
+  },
+  "categories": {
+    "custom-stickers": {
+      "src": "/images/categories/custom-stickers.webp",
+      "width": 1600,
+      "height": 1200
+    },
+    "custom-tags": {
+      "src": "/images/categories/custom-tags.webp",
+      "width": 1600,
+      "height": 1200
+    },
+    "dtf-stickers": {
+      "src": "/images/categories/dtf-stickers.webp",
+      "width": 1600,
+      "height": 1200
+    },
+    "packaging-boxes": {
+      "src": "/images/categories/packaging-boxes.webp",
+      "width": 1600,
+      "height": 1200
+    },
+    "uv-dtf-stickers": {
+      "src": "/images/categories/uv-dtf-stickers.webp",
+      "width": 1600,
+      "height": 1200
+    }
+  },
+  "products": {
+    "custom-hang-tags": [
+      {
+        "src": "/images/products/custom-hang-tags/1.webp",
+        "width": 1600,
+        "height": 1200
+      }
+    ],
+    "custom-uv-transfer-stickers": [
+      {
+        "src": "/images/products/custom-uv-transfer-stickers/1.webp",
+        "width": 1600,
+        "height": 1200
+      }
+    ],
+    "die-cut-stickers": [
+      {
+        "src": "/images/products/die-cut-stickers/1.webp",
+        "width": 1600,
+        "height": 1200
+      }
+    ],
+    "dtf-heat-transfer-stickers": [
+      {
+        "src": "/images/products/dtf-heat-transfer-stickers/1.webp",
+        "width": 1600,
+        "height": 1200
+      }
+    ],
+    "dtf-transfer-stickers": [
+      {
+        "src": "/images/products/dtf-transfer-stickers/1.webp",
+        "width": 1600,
+        "height": 1200
+      }
+    ],
+    "duplex-boxes": [
+      {
+        "src": "/images/products/duplex-boxes/1.webp",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "src": "/images/products/duplex-boxes/2.webp",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "src": "/images/products/duplex-boxes/3.webp",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "src": "/images/products/duplex-boxes/4.webp",
+        "width": 1600,
+        "height": 1200
+      }
+    ],
+    "mono-carton-boxes": [
+      {
+        "src": "/images/products/mono-carton-boxes/1.webp",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "src": "/images/products/mono-carton-boxes/2.webp",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "src": "/images/products/mono-carton-boxes/3.webp",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "src": "/images/products/mono-carton-boxes/4.webp",
+        "width": 1600,
+        "height": 1200
+      }
+    ],
+    "paper-gumming-stickers": [
+      {
+        "src": "/images/products/paper-gumming-stickers/1.webp",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "src": "/images/products/paper-gumming-stickers/2.webp",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "src": "/images/products/paper-gumming-stickers/3.webp",
+        "width": 1600,
+        "height": 1200
+      }
+    ],
+    "plastic-tags": [
+      {
+        "src": "/images/products/plastic-tags/1.webp",
+        "width": 1600,
+        "height": 1200
+      }
+    ],
+    "pvc-gumming-stickers": [
+      {
+        "src": "/images/products/pvc-gumming-stickers/1.webp",
+        "width": 1600,
+        "height": 1200
+      }
+    ],
+    "sbs-boxes": [
+      {
+        "src": "/images/products/sbs-boxes/1.webp",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "src": "/images/products/sbs-boxes/2.webp",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "src": "/images/products/sbs-boxes/3.webp",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "src": "/images/products/sbs-boxes/4.webp",
+        "width": 1600,
+        "height": 1200
+      }
+    ],
+    "uv-dtf-sticker-printing": [
+      {
+        "src": "/images/products/uv-dtf-sticker-printing/1.webp",
+        "width": 1600,
+        "height": 1200
+      }
+    ],
+    "vinyl-gumming-stickers": [
+      {
+        "src": "/images/products/vinyl-gumming-stickers/1.webp",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "src": "/images/products/vinyl-gumming-stickers/2.webp",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "src": "/images/products/vinyl-gumming-stickers/3.webp",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "src": "/images/products/vinyl-gumming-stickers/4.webp",
+        "width": 1600,
+        "height": 1200
+      }
+    ]
+  }
 };
